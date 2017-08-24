@@ -1,0 +1,56 @@
+{
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "clear": "rm -rf node_modules; rm -rf lib; rm -rf public",
+    "build": "webpack",
+    "start": "webpack-dev-server --content-base ./public",
+    "lint": "eslint ./src && echo \"eslint: ok!\"",
+    "managers": "npm i --prefix ../ dep-mngr-webpack dep-mngr-eslint",
+    "preinstall": "npm update --prefix $DEP_MNGR_PREFIX dep-mngr-webpack dep-mngr-eslint"
+  },
+  "keywords": [],
+  "author": "yefimenkoyuriy@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "react": "15.4.2",
+    "react-dom": "15.4.1",
+    "react-redux": "4.4.5",
+    "react-swipeable-views": "^0.12.5",
+    "redux": "3.5.2",
+    "redux-logger": "^3.0.1",
+    "redux-thunk": "^2.2.0",
+    "prop-types": "^15.5.9",
+    "reselect": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.22.0",
+    "compression-webpack-plugin": "^1.0.0",
+    "webpack": "^3.5.5"
+  },
+  "peerDependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.1",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.2.0"
+  },
+  "name": "News-app",
+  "description": "<a name=\"top\"></a>",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YefimenkoY/News-app.git"
+  }
+}

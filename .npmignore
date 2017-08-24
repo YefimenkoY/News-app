@@ -1,0 +1,16 @@
+.idea
+.vscode
+.DS_Store
+node_modules/*
+credentials/*
+tmp/*
+logs/*
+server/node_modules/*
+dump.rdb
+*.zip
+*.log
+Makefile
+.module-cache
+config/
+test/
+npm-debug.log.*
