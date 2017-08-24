@@ -1,6 +1,6 @@
-import flow from './flow';
+import articles from './articles';
 
 export default {
-  flow
+  articles,
 };
 

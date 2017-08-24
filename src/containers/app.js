@@ -1,14 +1,13 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import actions from '../actions';
+
 
 @connect(
   state => ({
   
-  }),
-  {
-  
-  }
+  }), actions
 )
 export default class App extends React.Component {
   static propTypes = {
@@ -16,7 +15,7 @@ export default class App extends React.Component {
   };
 
   componentWillMount() {
-  
+    this.props.fetchArticles({source: 'techcrunch'})
   }
 
 

@@ -15,6 +15,9 @@
   "author": "yefimenkoyuriy@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "antd": "^2.12.7",
+    "keymirror": "^0.1.1",
+    "prop-types": "^15.5.9",
     "react": "15.4.2",
     "react-dom": "15.4.1",
     "react-redux": "4.4.5",
@@ -22,10 +25,10 @@
     "redux": "3.5.2",
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
-    "prop-types": "^15.5.9",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
+    "axios": "^0.16.2",
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -37,6 +40,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.22.0",
     "compression-webpack-plugin": "^1.0.0",
+    "superagent": "^3.6.0",
     "webpack": "^3.5.5"
   },
   "peerDependencies": {
