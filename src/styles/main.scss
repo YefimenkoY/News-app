@@ -1,0 +1,21 @@
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css');
+@import "adaptive";
+@import "settings";
+
+.cards, .saves {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 100px;
+  li {
+    width: 30%;
+    margin-top: 10px;
+  }
+}
+
+.ant-layout.ant-layout-has-sider
+> .ant-layout,
+.ant-layout.ant-layout-has-sider >
+.ant-layout-content {
+  overflow-x: visible;
+}

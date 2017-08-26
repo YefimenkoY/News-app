@@ -4,7 +4,7 @@
 
 <a name="local_deployment"></a>
 
-## 3. Local deployment instruction
+## Start app
 ```shell
 git clone
 npm install

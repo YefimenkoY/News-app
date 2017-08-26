@@ -1,5 +1,6 @@
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+import alerts from './alerts';
 
 const DEV_ENV = 'development';
 const NODE_ENV = process.env.NODE_ENV || DEV_ENV;

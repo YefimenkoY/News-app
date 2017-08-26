@@ -40,6 +40,18 @@ const config = {
   ],
   module: {
     loaders:[
+      {
+        test: /\.css$/,
+        loader: [ 'style-loader', 'css-loader?modules', 'sass-loader?modules']
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)(\?.*)?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.scss$/,
+        loader :['style-loader','css-loader','sass-loader']
+      },
       { test:/\.json$/, loader:"json-loader" },
       { test: /\.js$/, loader:'babel-loader', exclude:/node_modules/, options: {
         babelrc: false,
@@ -53,7 +65,12 @@ const config = {
     ]
   },
   devServer: {
-    contentBase: './build',host:'0.0.0.0'
+    contentBase: './build',host:'0.0.0.0',
+    proxy: {
+      '/api/saves': {
+        target: 'http://localhost:8090'
+      }
+    }
   }
 };
 

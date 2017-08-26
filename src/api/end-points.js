@@ -1,2 +1,2 @@
-export const getArticles = params => `articles`;
-export const getSources = params => `sources`;
+export const getBooks = () => `books/v1/volumes`;
+export const getSaves = () => `/api/saves`;

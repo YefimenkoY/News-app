@@ -1,16 +1,43 @@
-import { fetchSources } from './get-sources';
-import { fetchArticles } from './get-articles';
+import { fetchBooks } from './get-books';
+import { fetchSaves } from './get-saves';
+import { sendSaves } from './send-saave';
 import AT from './types';
 
 export default {
   
-  saveArticles: articles => (
-    { type: AT.SAVE_ARTICLES, articles }
+  saveBooks: books => (
+    { type: AT.SAVE_BOOKS, books }
   ),
   
+  startLoading: () => (
+    { type: AT.LOADING_START }
+  ),
   
+  stopLoading: () => (
+    { type: AT.LOADING_STOP }
+  ),
   
-  fetchArticles,
-  fetchSources,
+  clearBookList: () => (
+    { type: AT.CLEAR_BOOKS }
+  ),
   
+  setSearchVal: val => (
+    { type: AT.SET_SEARCH_VAL, val }
+  ),
+  
+  saveFavorites: saves => (
+    { type: AT.SAVE_FAVORITES, saves }
+  ),
+  
+  startLoadingFav: () => (
+    { type: AT.LOADING_START_FAVORITES }
+  ),
+  
+  stopLoadingFav: () => (
+    { type: AT.LOADING_STOP_FAVORITES }
+  ),
+  
+  fetchBooks,
+  fetchSaves,
+  sendSaves,
 };

@@ -3,9 +3,9 @@ import config from '../../build-config.json';
 
 const { baseURL, apiKey } = config.newsApi;
 
-axios.defaults.baseURL = baseURL;
+const instance = axios.create({ baseURL });
 
 export const get = (url, options = {}) => (
-  axios.get(url, { params: { apiKey, ...options }})
+  instance.get(url, { params: { apiKey, ...options }})
 );
 
