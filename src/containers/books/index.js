@@ -6,8 +6,8 @@ import actions from '../../actions';
 
 import '../../styles/main.scss';
 import CardComp from '../../components/Card';
-import { Input } from 'antd';
-import Modals from '../../common/Modals';
+import { Input, BackTop } from 'antd';
+import ErrorAlert from '../../common/Modals';
 
 import { MAX_RESULTS } from '../../constants/lists';
 
@@ -17,8 +17,6 @@ import { MAX_RESULTS } from '../../constants/lists';
     startIndex: state.books.startIndex,
     searchVal: state.books.searchVal,
     loading: state.books.loading,
-    modal: state.alerts.modal,
-    text: state.alerts.text,
   }), actions
 )
 export default class BooksList extends React.Component {
@@ -39,13 +37,13 @@ export default class BooksList extends React.Component {
     window.removeEventListener('scroll', this.onScroll)
   }
   
-  onScroll = () => {
-    const { fetchBooks, index, searchVal } = this.props;
-    const params = { q: searchVal, startIndex: index, maxResults: 9 };
-    if ($(window).scrollTop() === $(document).height() - $(window).height()){
-      searchVal && fetchBooks(params);
+  onScroll = () =>{
+    const {fetchBooks,startIndex,searchVal}=this.props;
+    const params={q:searchVal,startIndex,maxResults:9};
+    if($(window).scrollTop()===$(document).height()-$(window).height()){
+      searchVal&&fetchBooks(params);
     }
-  };
+  }
   
   onChange = e => {
     const {
@@ -74,6 +72,7 @@ export default class BooksList extends React.Component {
     
     return (
       <div className="container">
+        <ErrorAlert message="Error"/>
         <h1>Search books:</h1>
         <Input
           placeholder="Search..."
@@ -81,7 +80,8 @@ export default class BooksList extends React.Component {
           onChange={this.onChange}
           value={searchVal}
         />
-        <ul className="cards">
+        <BackTop/>
+        <ul className="cards" onClick={() => this.props.createAlert('errorAlert', 'My error')}>
           {books && books.map(
             (book, i) => (
               <li key={i} >

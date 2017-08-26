@@ -1,10 +1,10 @@
 import books from './books';
-import alerts from './alerts';
 import saves from './saves';
+import { alertReducer } from 'react-redux-alerts';
 
 export default {
   books,
-  alerts,
+  alerts: alertReducer,
   saves,
-};
+  };
 

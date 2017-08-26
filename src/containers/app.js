@@ -50,12 +50,12 @@ export default class App extends React.Component {
           <Layout>
             <Spin spinning={loading} tip="Loading..." delay={400} size='large'>
               <Content style={{ margin: '0 0' }}>
-                <div style={{ padding: 24, background: '#41baf2', minHeight: 600 }}>
+                <div style={{ padding: 24, background: '#ECECEC', minHeight: 600 }}>
                   {children}
                 </div>
               </Content>
             </Spin>
-            <Footer style={{ background: '#41baf2', textAlign: 'center' }}>
+            <Footer style={{ background: '#ECECEC', textAlign: 'center' }}>
               ©2017 Created by <a href="https://github.com/YefimenkoY">YefimenkoY</a>
             </Footer>
           </Layout>

@@ -1,6 +1,7 @@
 import { fetchBooks } from './get-books';
 import { fetchSaves } from './get-saves';
 import { sendSaves } from './send-saave';
+import { actions as alertActions } from 'react-redux-alerts';
 import AT from './types';
 
 export default {
@@ -40,4 +41,5 @@ export default {
   fetchBooks,
   fetchSaves,
   sendSaves,
+  ...alertActions,
 };

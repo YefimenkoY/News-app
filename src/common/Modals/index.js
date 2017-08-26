@@ -1,4 +1,9 @@
-import { Modal } from 'antd';
+import React from 'react';
+import { Alert } from 'antd';
+
+
+import { createAlert } from 'react-redux-alerts';
+/*
 
 function info() {
   Modal.info({
@@ -35,5 +40,28 @@ function warning() {
     content: 'some messages...some messages...',
   });
 }
+*/
+
+@createAlert({
+  alertName: 'errorAlert'
+})
+export default class ErrorAlert extends React.Component {
+  render() {
+    const { message, close } = this.props;
+    
+    return (
+      <Alert
+        message={message}
+        description="Error Description Error Description Error Description Error Description Error Description Error Description"
+        type="error"
+        closable
+        onClose={close}
+      />
+    )
+  }
+}
+
+
+
 
 
