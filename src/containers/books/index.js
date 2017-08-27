@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import $ from 'jquery';
 import actions from '../../actions';
 
-import '../../styles/main.scss';
+import './book.scss'
 import CardComp from '../../components/Card';
 import { Input, BackTop } from 'antd';
-import { ErrorAlert, SuccessAlert } from '../../common/Modals';
+import { ErrorAlert, SuccessAlert } from '../../components/Modals';
 import alertStatuses from '../../constants/alertStatuses'
 import { MAX_RESULTS } from '../../constants/lists';
 
@@ -84,7 +84,7 @@ export default class BooksList extends React.Component {
     return (
       <div className="container">
         {children ? children : (
-          <div>
+          <div className="news">
             <div className="modals">
               <ErrorAlert />
               <SuccessAlert />
@@ -98,10 +98,10 @@ export default class BooksList extends React.Component {
               value={searchVal}
             />
             <BackTop/>
-            <ul className="cards">
+            <ul className="news__list">
               {books && books.map(
                 (book, i) => (
-                  <li key={i} >
+                  <li className="news__item" key={i} >
                     <CardComp id={book.id} sendSave={sendSaves} {...book.volumeInfo} />
                   </li>
                 )

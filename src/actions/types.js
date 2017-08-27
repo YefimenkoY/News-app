@@ -9,6 +9,8 @@ export default keyMirror({
   'SET_SEARCH_VAL': null,
   'SHOW_MODAL': null,
   'CLEAR_MODAL_TYPE': null,
+  'SELECT_BOOK': null,
+  'SAVE_SELECT_BOOK': null,
   
   'SAVE_FAVORITES': null,
   'LOADING_START_FAVORITES': null,

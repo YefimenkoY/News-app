@@ -1,7 +1,5 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 import { Link } from 'react-router';
 
 class NavMenu extends React.Component {
@@ -16,6 +14,8 @@ class NavMenu extends React.Component {
   };
   
   render() {
+    const { count } = this.props;
+    
     return (
       <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
         <Menu.Item key="1">
@@ -30,7 +30,6 @@ class NavMenu extends React.Component {
             <span>Search books</span>
           </Link>
         </Menu.Item>
-        
         <Menu.Item key="3">
           <Link to="/saves">
             <Icon type="save" />

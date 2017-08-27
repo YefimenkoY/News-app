@@ -68,7 +68,7 @@ const config = {
     contentBase: './build',host:'0.0.0.0',
     proxy: {
       '/api/saves': {
-        target: 'http://localhost:8090'
+        target: 'http://localhost:8060'
       }
     }
   }

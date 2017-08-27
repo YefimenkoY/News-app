@@ -6,7 +6,7 @@ import actions from '../actions';
 import '../styles/main.scss';
 
 import { Layout } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 import NavMenu from '../components/main-menu';
 import { Spin } from 'antd';
 
@@ -15,6 +15,7 @@ import { Spin } from 'antd';
 @connect(
   state => ({
     loading: state.books.loading,
+    saves: state.saves.saves,
   }), actions
 )
 export default class App extends React.Component {
@@ -34,8 +35,8 @@ export default class App extends React.Component {
   };
   
   render() {
-    const { loading, children } = this.props;
-
+    const { loading, children, saves } = this.props;
+    const count = saves.length ? saves.length : 0;
     
     return (
       <div className="wrapper">
@@ -45,7 +46,7 @@ export default class App extends React.Component {
             collapsed={this.state.collapsed}
             onCollapse={this.onCollapse}
           >
-            <NavMenu/>
+            <NavMenu count={count} />
           </Sider>
           <Layout>
             <Spin spinning={loading} tip="Loading..." size='large'>

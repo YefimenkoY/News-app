@@ -23,20 +23,24 @@ export default class Saves extends React.Component {
   }
   
   render() {
-    const { saves } = this.props;
+    const { saves, children } = this.props;
     
     return (
       <div className="container">
-        <h1 className="title">Favorites Books:</h1>
-        <ul className="saves">
-          {saves && saves.map((save, i) => {
-            return (
-              <li key={i}>
-                <SaveCard {...save.volumeInfo}/>
-              </li>
-            )
-          })}
-        </ul>
+        {children ? children : (
+          <div>
+            <h1 className="title">Favorites Books:</h1>
+            <ul className="news__list">
+              {saves && saves.map((save, i) => {
+                return (
+                  <li className="news__item" key={i}>
+                    <SaveCard id={save.id} {...save.volumeInfo}/>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        )}
       </div>
     );
   }

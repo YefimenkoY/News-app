@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import configureStore from '../src/store';
-import { App, reducers, middlewares } from '../src';
+import { reducers, middlewares } from '../src';
 import createRoutes from '../src/routes';
 
+import '../src/styles/main.scss';
 const store = configureStore(reducers, middlewares);
 const routes = createRoutes();
 

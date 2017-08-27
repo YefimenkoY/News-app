@@ -7,3 +7,10 @@ export const selectBook = id => (
     books.filter(book => book.id === id))[0]
   )
 );
+
+export const selectDetailBook = id => (
+  createSelector(getBooks, books => (
+    books.filter(book => book.id === id)
+  ))
+);
+

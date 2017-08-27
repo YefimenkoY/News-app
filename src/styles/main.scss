@@ -3,19 +3,19 @@
 @import "settings";
 @import "mixin";
 
-.cards, .saves {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 40px;
-  li {
-    width: 30%;
-    margin-top: 10px;
-    @include phones() {
-      width: 80%;
-    }
-  }
-}
+//.cards, .saves {
+//  display: flex;
+//  flex-wrap: wrap;
+//  justify-content: center;
+//  margin-top: 40px;
+//  li {
+//    width: 30%;
+//    margin-top: 10px;
+//    @include phones() {
+//      width: 80%;
+//    }
+//  }
+//}
 
 .ant-layout.ant-layout-has-sider
 > .ant-layout,

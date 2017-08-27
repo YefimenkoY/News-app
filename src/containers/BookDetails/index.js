@@ -13,14 +13,10 @@ import { DEFAULT_IMG } from '../../constants/lists';
 @connect(
   state => ({
     books: state.books.books,
-    startIndex: state.books.startIndex,
-    searchVal: state.books.searchVal,
-    loading: state.books.loading,
-    modalType: state.books.modalType,
   }), actions
 )
 
-class BookDetails extends Component {
+export default class BookDetails extends Component {
   
   static propTypes = {
     books: PropTypes.array.isRequired,
@@ -62,7 +58,7 @@ class BookDetails extends Component {
               </span>
             </div>
             <div className="book__detail-button">
-              <Link to="/books" >
+              <Link to="/books">
                 <Button type="primary">
                   <Icon type="left" />Back
                 </Button>
@@ -80,4 +76,3 @@ class BookDetails extends Component {
 }
 
 
-export default BookDetails;
