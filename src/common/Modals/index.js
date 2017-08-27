@@ -43,17 +43,34 @@ function warning() {
 */
 
 @createAlert({
-  alertName: 'errorAlert'
+  alertName: 'not-found'
 })
-export default class ErrorAlert extends React.Component {
+export class ErrorAlert extends React.Component {
   render() {
     const { message, close } = this.props;
     
     return (
       <Alert
         message={message}
-        description="Error Description Error Description Error Description Error Description Error Description Error Description"
         type="error"
+        closable
+        onClose={close}
+      />
+    )
+  }
+}
+
+@createAlert({
+  alertName: 'Success'
+})
+export class SuccessAlert extends React.Component {
+  render() {
+    const { message, close } = this.props;
+    
+    return (
+      <Alert
+        message={message}
+        type="success"
         closable
         onClose={close}
       />

@@ -6,19 +6,16 @@ import { selectBook } from '../selectors';
 
 export const sendSaves = id => async (dispatch, getState) => {
   const {
-    saveFavorites, startLoadingFav, stopLoadingFav
+    saveFavorites, showModal
   } = bindActionCreators({
     saveFavorites: AC.saveFavorites,
-    stopLoadingFav: AC.stopLoadingFav,
-    startLoadingFav: AC.startLoadingFav,
+    showModal: AC.showModal,
   }, dispatch);
   
   const book = selectBook(id)(getState());
   
-  startLoadingFav();
-  
   const { data } = await axios.post( getSaves(), book );
   
   saveFavorites(data);
-  stopLoadingFav()
+  showModal('success');
 };

@@ -27,7 +27,7 @@ export default class Saves extends React.Component {
     
     return (
       <div className="container">
-        <h1>Favorites Books:</h1>
+        <h1 className="title">Favorites Books:</h1>
         <ul className="saves">
           {saves && saves.map((save, i) => {
             return (

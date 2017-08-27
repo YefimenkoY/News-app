@@ -7,8 +7,8 @@ import actions from '../../actions';
 import '../../styles/main.scss';
 import CardComp from '../../components/Card';
 import { Input, BackTop } from 'antd';
-import ErrorAlert from '../../common/Modals';
-
+import { ErrorAlert, SuccessAlert } from '../../common/Modals';
+import alertStatuses from '../../constants/alertStatuses'
 import { MAX_RESULTS } from '../../constants/lists';
 
 @connect(
@@ -17,6 +17,7 @@ import { MAX_RESULTS } from '../../constants/lists';
     startIndex: state.books.startIndex,
     searchVal: state.books.searchVal,
     loading: state.books.loading,
+    modalType: state.books.modalType,
   }), actions
 )
 export default class BooksList extends React.Component {
@@ -37,11 +38,21 @@ export default class BooksList extends React.Component {
     window.removeEventListener('scroll', this.onScroll)
   }
   
-  onScroll = () =>{
-    const {fetchBooks,startIndex,searchVal}=this.props;
+  componentDidUpdate(prevProps) {
+    const { modalType, clearModalType, createAlert, dismissAlert, searchVal } = this.props;
+    modalType && createAlert(modalType, alertStatuses.NOT_FOUND);
+    if (prevProps.searchVal !== searchVal && modalType === 'not-found') {
+      dismissAlert(modalType);
+      clearModalType()
+    }
+  }
+  
+  onScroll = () => {
+    const {fetchBooks, children, startIndex, modalType, searchVal} = this.props;
+    if (children) return;
     const params={q:searchVal,startIndex,maxResults:9};
-    if($(window).scrollTop()===$(document).height()-$(window).height()){
-      searchVal&&fetchBooks(params);
+    if($(window).scrollTop() === $(document).height() - $(window).height()){
+      searchVal && modalType !== 'not-found' && fetchBooks(params);
     }
   }
   
@@ -68,28 +79,37 @@ export default class BooksList extends React.Component {
   };
   
   render() {
-    const { books, searchVal, sendSaves } = this.props;
+    const { books, children, searchVal, sendSaves } = this.props;
     
     return (
       <div className="container">
-        <ErrorAlert message="Error"/>
-        <h1>Search books:</h1>
-        <Input
-          placeholder="Search..."
-          ref={this.inputRef}
-          onChange={this.onChange}
-          value={searchVal}
-        />
-        <BackTop/>
-        <ul className="cards" onClick={() => this.props.createAlert('errorAlert', 'My error')}>
-          {books && books.map(
-            (book, i) => (
-              <li key={i} >
-                <CardComp id={book.id} sendSave={sendSaves} {...book.volumeInfo} />
-              </li>
-            )
-          )}
-        </ul>
+        {children ? children : (
+          <div>
+            <div className="modals">
+              <ErrorAlert />
+              <SuccessAlert />
+            </div>
+            <h1 className="title">Search books:</h1>
+            <Input
+              className='search-input'
+              placeholder="Search..."
+              ref={this.inputRef}
+              onChange={this.onChange}
+              value={searchVal}
+            />
+            <BackTop/>
+            <ul className="cards">
+              {books && books.map(
+                (book, i) => (
+                  <li key={i} >
+                    <CardComp id={book.id} sendSave={sendSaves} {...book.volumeInfo} />
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
+        )}
+        
       </div>
     );
   }

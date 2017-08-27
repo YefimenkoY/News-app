@@ -2,8 +2,6 @@ import { bindActionCreators } from 'redux';
 import { get } from '../api';
 import { getBooks } from '../api/end-points';
 import AC from './';
-import alertStatuses from '../constants/alertStatuses';
-
 
 export const fetchBooks = params => async dispatch => {
   const {
@@ -21,8 +19,7 @@ export const fetchBooks = params => async dispatch => {
   
   if (!data.totalItems) {
     stopLoading();
-    showModal('error');
-    return;
+    return showModal('not-found');
   }
   
   saveBooks(data.items);

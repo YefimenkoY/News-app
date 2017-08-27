@@ -48,7 +48,7 @@ export default class App extends React.Component {
             <NavMenu/>
           </Sider>
           <Layout>
-            <Spin spinning={loading} tip="Loading..." delay={400} size='large'>
+            <Spin spinning={loading} tip="Loading..." size='large'>
               <Content style={{ margin: '0 0' }}>
                 <div style={{ padding: 24, background: '#ECECEC', minHeight: 600 }}>
                   {children}

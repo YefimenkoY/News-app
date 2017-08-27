@@ -5,6 +5,7 @@ const initialState = {
   startIndex: 0,
   loading: false,
   searchVal: '',
+  modalType: null,
 };
 
 const books = (state = initialState, action) => {
@@ -38,6 +39,17 @@ const books = (state = initialState, action) => {
       return {
         ...state,
         searchVal: action.val
+      }
+    case AT.SHOW_MODAL:
+      return {
+        ...state,
+        modalType: action.modalType,
+      }
+    case AT.CLEAR_MODAL_TYPE:
+      return {
+        ...state,
+        modalType: null,
+        text: '',
       }
     
     

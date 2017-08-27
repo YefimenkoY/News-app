@@ -38,6 +38,14 @@ export default {
     { type: AT.LOADING_STOP_FAVORITES }
   ),
   
+  showModal: (modalType) => (
+    { type: AT.SHOW_MODAL, modalType }
+  ),
+  
+  clearModalType: () => (
+    { type: AT.CLEAR_MODAL_TYPE, }
+  ),
+  
   fetchBooks,
   fetchSaves,
   sendSaves,

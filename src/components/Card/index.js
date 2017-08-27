@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Button } from 'antd';
+import { Link } from 'react-router';
 
 import { DEFAULT_IMG } from '../../constants/lists';
 
@@ -23,7 +24,9 @@ const CardComp = (
         />
       </div>
       <div className="custom-card">
-        <h3>{title}</h3>
+        <Link to={`books/book-${id}`}>
+          <h3>{title}</h3>
+        </Link>
         <p>{''}</p>
         <Button onClick={onSave} primary>save</Button>
       </div>
