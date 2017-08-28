@@ -1,5 +1,5 @@
 {
-  "newsApi": {
+  "booksApi": {
     "apiKey": "093f2c94546e4a498ab7678886a46002",
     "baseURL": "https://www.googleapis.com/"
   }

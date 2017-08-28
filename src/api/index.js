@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../../build-config.json';
 
-const { baseURL, apiKey } = config.newsApi;
+const { baseURL, apiKey } = config.booksApi;
 
 const instance = axios.create({ baseURL });
 

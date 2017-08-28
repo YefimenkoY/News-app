@@ -1,15 +1,15 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
+import React, { Children } from 'react';
+import { PropTypes as PT } from 'prop-types';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 import actions from '../../actions';
 
-import './book.scss'
 import CardComp from '../../components/Card';
-import { Input, BackTop } from 'antd';
+import { Input, BackTop, message } from 'antd';
 import { ErrorAlert, SuccessAlert } from '../../components/Modals';
 import alertStatuses from '../../constants/alertStatuses'
 import { MAX_RESULTS } from '../../constants/lists';
+import './book.scss';
 
 @connect(
   state => ({
@@ -18,15 +18,29 @@ import { MAX_RESULTS } from '../../constants/lists';
     searchVal: state.books.searchVal,
     loading: state.books.loading,
     modalType: state.books.modalType,
+    saves: state.saves.saves,
   }), actions
 )
 export default class BooksList extends React.Component {
+  
   constructor() {
     super();
     this.timer = false;
   }
-  static propTypes = {
   
+  static propTypes = {
+    books: PT.array,
+    startIndex: PT.number,
+    searchVal: PT.string,
+    loading: PT.bool,
+    modalType: PT.string,
+    clearModalType: PT.func,
+    createAlert: PT.func,
+    dismissAlert: PT.func,
+    fetchBooks: PT.func,
+    setSearchVal: PT.func,
+    clearBookList: PT.func,
+    sendSaves: PT.func,
   };
   
   componentDidMount() {
@@ -40,7 +54,8 @@ export default class BooksList extends React.Component {
   
   componentDidUpdate(prevProps) {
     const { modalType, clearModalType, createAlert, dismissAlert, searchVal } = this.props;
-    modalType && createAlert(modalType, alertStatuses.NOT_FOUND);
+    const { NOT_FOUND } = alertStatuses;
+    modalType && createAlert(modalType, NOT_FOUND);
     if (prevProps.searchVal !== searchVal && modalType === 'not-found') {
       dismissAlert(modalType);
       clearModalType()
@@ -50,11 +65,11 @@ export default class BooksList extends React.Component {
   onScroll = () => {
     const {fetchBooks, children, startIndex, modalType, searchVal} = this.props;
     if (children) return;
-    const params={q:searchVal,startIndex,maxResults:9};
+    const params = { q: searchVal, startIndex, maxResults: 9};
     if($(window).scrollTop() === $(document).height() - $(window).height()){
       searchVal && modalType !== 'not-found' && fetchBooks(params);
     }
-  }
+  };
   
   onChange = e => {
     const {
@@ -63,27 +78,28 @@ export default class BooksList extends React.Component {
       startIndex,
       setSearchVal,
       searchVal,
+      loading,
     } = this.props;
-    const q = e.target.value === '' ? '' : searchVal;
-    const params = { q, startIndex, maxResults: MAX_RESULTS };
+    const params = { q: searchVal, startIndex, maxResults: MAX_RESULTS };
     
+    if (loading) return;
     setSearchVal(e.target.value);
     clearBookList();
     
     if (this.timer) clearTimeout(this.timer);
   
     this.timer = setTimeout(() => {
-      q && fetchBooks(params);
+      searchVal && fetchBooks(params);
       this.timer = false;
     }, 800);
   };
   
   render() {
-    const { books, children, searchVal, sendSaves } = this.props;
+    const { books, children, saves, searchVal, sendSaves } = this.props;
     
     return (
       <div className="container">
-        {children ? children : (
+        {Children.count(children) ? children : (
           <div className="news">
             <div className="modals">
               <ErrorAlert />
@@ -102,14 +118,18 @@ export default class BooksList extends React.Component {
               {books && books.map(
                 (book, i) => (
                   <li className="news__item" key={i} >
-                    <CardComp id={book.id} sendSave={sendSaves} {...book.volumeInfo} />
+                    <CardComp
+                      id={book.id}
+                      sendSave={sendSaves}
+                      {...book.volumeInfo}
+                      saves={saves}
+                    />
                   </li>
                 )
               )}
             </ul>
           </div>
         )}
-        
       </div>
     );
   }

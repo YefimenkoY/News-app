@@ -1,16 +1,14 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import { PropTypes as PT } from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../actions';
 
-import '../styles/main.scss';
-
 import { Layout } from 'antd';
-const { Content, Footer, Sider } = Layout;
 import NavMenu from '../components/main-menu';
 import { Spin } from 'antd';
+import '../styles/main.scss';
 
-
+const { Content, Footer, Sider } = Layout;
 
 @connect(
   state => ({
@@ -19,12 +17,11 @@ import { Spin } from 'antd';
   }), actions
 )
 export default class App extends React.Component {
-  static propTypes = {
   
+  static propTypes = {
+    loading: PT.bool,
+    saves: PT.array,
   };
-
-  componentWillMount() {
-  }
   
   state = {
     collapsed: false,
@@ -50,13 +47,11 @@ export default class App extends React.Component {
           </Sider>
           <Layout>
             <Spin spinning={loading} tip="Loading..." size='large'>
-              <Content style={{ margin: '0 0' }}>
-                <div style={{ padding: 24, background: '#ECECEC', minHeight: 600 }}>
-                  {children}
-                </div>
+              <Content className="content">
+                <div className="content-inner">{children}</div>
               </Content>
             </Spin>
-            <Footer style={{ background: '#ECECEC', textAlign: 'center' }}>
+            <Footer className="footer">
               ©2017 Created by <a href="https://github.com/YefimenkoY">YefimenkoY</a>
             </Footer>
           </Layout>

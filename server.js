@@ -24,7 +24,7 @@ app.get('/api/saves', function(req, res) {
   });
 });
 
-app.post('/api/saves', function(req) {
+app.post('/api/saves', function(req, res) {
   const data = req.body;
   
   if (data) {
@@ -33,21 +33,23 @@ app.post('/api/saves', function(req) {
     fs.writeFile('./saves.json', JSON.stringify(saves), function(err) {
       if(err)
         return console.log(err);
+  
+      res.send(saves);
       console.log("The file was saved!");
     })
   }
 });
 
-app.delete('/api/saves', function(req) {
+app.delete('/api/saves', function(req, res) {
   const id = req.param('id');
-  
+
   saves = saves.filter(function (save) {
     return save.id !== id;
   });
   fs.writeFile('./saves.json', JSON.stringify(saves), function(err) {
     if(err)
       return console.log(err);
-    
+    res.send(saves);
     console.log("The file was deleted!");
   })
 });

@@ -1,17 +1,12 @@
 import { bindActionCreators } from 'redux';
 import { get } from '../api';
 import { getBooks } from '../api/end-points';
-import AC from './';
+import actions from './';
 
 export const fetchBooks = params => async dispatch => {
   const {
     saveBooks, startLoading, stopLoading, showModal
-  } = bindActionCreators({
-    saveBooks: AC.saveBooks,
-    stopLoading: AC.stopLoading,
-    startLoading: AC.startLoading,
-    showModal: AC.showModal,
-  }, dispatch);
+  } = bindActionCreators(actions, dispatch);
   
   startLoading();
   
@@ -19,7 +14,8 @@ export const fetchBooks = params => async dispatch => {
   
   if (!data.totalItems) {
     stopLoading();
-    return showModal('not-found');
+    showModal('not-found');
+    return;
   }
   
   saveBooks(data.items);

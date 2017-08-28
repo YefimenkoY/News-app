@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import { PropTypes as PT } from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../actions';
 
@@ -15,12 +15,28 @@ import SaveCard from '../../components/Card/saveCard';
 export default class Saves extends React.Component {
 
   static propTypes = {
-  
+    loading: PT.bool,
+    saves: PT.array,
+    deleteSave: PT.func,
   };
   
   componentWillMount() {
     this.props.fetchSaves();
   }
+  
+  renderSavesList = saves => (
+    saves && saves.map((save, i) => {
+      return (
+        <li className="news__item" key={i}>
+          <SaveCard
+            deleteSave={this.props.deleteSave}
+            id={save.id}
+            {...save.volumeInfo}
+          />
+        </li>
+      )
+    })
+  );
   
   render() {
     const { saves, children } = this.props;
@@ -31,13 +47,7 @@ export default class Saves extends React.Component {
           <div>
             <h1 className="title">Favorites Books:</h1>
             <ul className="news__list">
-              {saves && saves.map((save, i) => {
-                return (
-                  <li className="news__item" key={i}>
-                    <SaveCard id={save.id} {...save.volumeInfo}/>
-                  </li>
-                )
-              })}
+              {this.renderSavesList(saves)}
             </ul>
           </div>
         )}

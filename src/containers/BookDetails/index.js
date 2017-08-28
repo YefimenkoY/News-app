@@ -1,42 +1,53 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Button, Icon } from 'antd';
 
-import './book-details.scss'
-
+import { Button, Icon, message } from 'antd';
+import { selectBook } from '../../selectors';
 import actions from '../../actions';
-import { DEFAULT_IMG } from '../../constants/lists';
-
+import { DEFAULT_IMG } from '../../constants/lists'
+import statuses from '../../constants/alertStatuses';
+import './book-details.scss';
 
 @connect(
-  state => ({
-    books: state.books.books,
-  }), actions
+  (state, props) => {
+    const id = props.params.id.slice(5);
+    return {
+      book: selectBook(id)(state),
+      id,
+      saves: state.saves.saves
+    }
+  }, actions
 )
 
 export default class BookDetails extends Component {
   
   static propTypes = {
-    books: PropTypes.array.isRequired,
-    saveBook: PropTypes.func.isRequired,
+    books: PropTypes.array,
+    id: PropTypes.string,
+    sendSaves: PropTypes.func,
   };
   
   onSaveBook = () => {
-    const val = this.props.params.id.slice(5);
-    this.props.saveBook(val)
+    const { sendSaves, id, saves } = this.props;
+    const isExistBook = saves.find(save => save.id === id);
+    if (isExistBook) return message.warn(statuses.EXIST_BOOK);
+    sendSaves(id);
+    message.success(statuses.SUCCESS_ADD);
   };
   
   render() {
-    const { books, params } = this.props;
-    const book = books.filter(book => book.id === params.id.slice(5))[0];
+    const { book } = this.props;
     const {
       volumeInfo: {title, categories, authors, imageLinks, publishedDate, description }
     } = book;
     const desc = description ? description : 'Not found';
     const imgUrl = imageLinks && imageLinks.thumbnail ?
       imageLinks.thumbnail : DEFAULT_IMG;
+    const auth = authors && authors.map((author, i) => (
+      i <= 3 ? <span key={i}>{author}</span> : '')
+    )
     
     return (
       <div className="book__detail">
@@ -49,7 +60,7 @@ export default class BookDetails extends Component {
             <div className="book__detail-info">
               <div className="info-top">
                  <span className="author">
-                   {authors ? authors.map((author, i) => i <= 3 ? <span key={i}>{author}</span> : '') : 'Unknown'}
+                   {authors ? auth : 'Unknown'}
                  </span>
                 <span className="published">Published: {publishedDate}</span>
               </div>
@@ -63,6 +74,9 @@ export default class BookDetails extends Component {
                   <Icon type="left" />Back
                 </Button>
               </Link>
+              <Button type="primary" icon='save' onClick={this.onSaveBook} >
+                Save
+              </Button>
             </div>
           </div>
         </div>

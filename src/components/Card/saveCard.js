@@ -1,15 +1,21 @@
 import React from 'react';
-import { Button, Icon } from 'antd';
+import { Button, message } from 'antd';
 import { Link } from 'react-router';
 
 import { DEFAULT_IMG } from '../../constants/lists';
 import { shortenTitle } from '../../common';
+import statuses from '../../constants/alertStatuses';
 
 const SaveCard = (
-  {  title, id, imageLinks, authors, onDelete }
+  {  title, id, imageLinks, authors, deleteSave }
 ) => {
   const imgUrl = imageLinks && imageLinks.thumbnail ?
     imageLinks.thumbnail : DEFAULT_IMG;
+  
+  const onDelete = () => {
+    deleteSave(id);
+    message.success(statuses.SUCCESS_DELETE);
+  }
   
   return (
     <div>

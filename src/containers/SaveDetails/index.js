@@ -1,43 +1,49 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Button, Icon } from 'antd';
-
-import '../BookDetails/book-details.scss';
+import { Button, Icon, message } from 'antd';
+import { selectSaveBook } from '../../selectors';
 
 import actions from '../../actions';
 import { DEFAULT_IMG } from '../../constants/lists';
-
+import statuses from '../../constants/alertStatuses';
+import '../BookDetails/book-details.scss';
 
 @connect(
-  state => ({
-    saves: state.saves.saves,
-  }), actions
+  (state, props) => {
+    const id = props.params.id.slice(5);
+    return { save: selectSaveBook(id)(state), id }
+  }, actions
 )
 
 export default class SaveDetails extends Component {
   
   static propTypes = {
-    books: PropTypes.array.isRequired,
-    saveBook: PropTypes.func.isRequired,
+    save: PropTypes.object,
+    id: PropTypes.string,
   };
   
-  onSaveBook = () => {
-    const val = this.props.params.id.slice(5);
-    this.props.saveBook(val)
+  onDelete = () => {
+    this.props.deleteSave(this.props.id);
+    message.success(statuses.SUCCESS_DELETE)
   };
   
   render() {
-    const { saves, params } = this.props;
-    const save = saves.filter(save => save.id === params.id.slice(5))[0];
+    const { save } = this.props;
     const {
       volumeInfo: {title, categories, authors, imageLinks, publishedDate, description }
     } = save;
     const desc = description ? description : 'Not found';
     const imgUrl = imageLinks && imageLinks.thumbnail ?
       imageLinks.thumbnail : DEFAULT_IMG;
-    
+    const auth = authors && authors.map((author, i) => (
+      i <= 3 ? <span key={i}>{author}</span> : '')
+    );
+    const categ = categories && categories.map((item, i) => (
+      (i <= 3) ? <span key={i}>{item}</span> : '')
+    );
+  
     return (
       <div className="book__detail">
         <div className="book__detail-top">
@@ -48,19 +54,23 @@ export default class SaveDetails extends Component {
             <h3>{title}</h3>
             <div className="book__detail-info">
               <div className="info-top">
-                 <span className="author">
-                   {authors ? authors.map((author, i) => i <= 3 ? <span key={i}>{author}</span> : '') : 'Unknown'}
-                 </span>
+                <span className="author">{!authors ? 'Unknown' : auth }</span>
                 <span className="published">Published: {publishedDate}</span>
               </div>
               <span className="categories">
-                {categories ? categories.map((item, i) => (i <= 3) ? <span key={i}>{item}</span> : '') : 'Unknown'}
+                { !categories ? 'Unknown' : categ }
               </span>
             </div>
             <div className="book__detail-button">
-              <Link to="/books">
+              <Link to="/saves">
                 <Button type="primary">
-                  <Icon type="left" />Back
+                  <Icon type="left" />
+                  Back
+                </Button>
+              </Link>
+              <Link to="/saves" >
+                <Button type="primary" icon='delete' onClick={this.onDelete} >
+                  Delete
                 </Button>
               </Link>
             </div>

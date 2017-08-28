@@ -3,19 +3,25 @@
 @import "settings";
 @import "mixin";
 
-//.cards, .saves {
-//  display: flex;
-//  flex-wrap: wrap;
-//  justify-content: center;
-//  margin-top: 40px;
-//  li {
-//    width: 30%;
-//    margin-top: 10px;
-//    @include phones() {
-//      width: 80%;
-//    }
-//  }
-//}
+.ant-layout-sider-children {
+  position: fixed;
+  width: 200px;
+}
+
+.content {
+  margin: 0 0;
+
+  &-inner {
+    padding: 24px;
+    background: #ECECEC;
+    min-height: 600px;
+  }
+}
+
+.footer {
+  background: #ECECEC;
+  text-align: center;
+}
 
 .ant-layout.ant-layout-has-sider
 > .ant-layout,

@@ -1,17 +1,25 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { Link } from 'react-router';
 
 import { DEFAULT_IMG } from '../../constants/lists';
 import { shortenTitle } from '../../common';
+import statuses from '../../constants/alertStatuses';
 import './Card.scss';
+
 const CardComp = (
-  {  title, id, sendSave, imageLinks, authors }
-  ) => {
+  {  title, id, sendSave, saves, imageLinks, authors }
+) => {
   const imgUrl = imageLinks && imageLinks.thumbnail ?
     imageLinks.thumbnail : DEFAULT_IMG;
+  const shortTitle = shortenTitle(title);
   
-  const onSave = () => sendSave(id);
+  const onSave = () => {
+    const isExistBook = saves.find(save => save.id === id);
+    if (isExistBook) return message.warn(statuses.EXIST_BOOK);
+    sendSave(id);
+    message.success(statuses.SUCCESS_ADD);
+  }
   
   return (
     <div>
@@ -23,7 +31,7 @@ const CardComp = (
       <div className="news__text">
         <Link to={`books/book-${id}`}>
           <h3>
-            { shortenTitle(title) }
+            { shortTitle }
             <br/>
             <span className="news__author">
               {authors ? authors.map((author, i) => (i <= 3) ?
@@ -32,7 +40,14 @@ const CardComp = (
           </h3>
         </Link>
         <div className="book__adding">
-          <Button onClick={onSave} ghost type='primary' icon="cloud-download">save</Button>
+          <Button
+            onClick={onSave}
+            ghost
+            type='primary'
+            icon="cloud-download"
+          >
+            save
+          </Button>
         </div>
       </div>
     </div>
