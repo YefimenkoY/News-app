@@ -12,18 +12,20 @@ import SaveCard from '../../components/Card/saveCard';
     saves: state.saves.saves,
   }), actions
 )
-export default class Saves extends React.Component {
 
+export default class Saves extends React.Component {
   static propTypes = {
     loading: PT.bool,
     saves: PT.array,
     deleteSave: PT.func,
+    fetchSaves: PT.func,
+    children: PT.object,
   };
-  
+
   componentWillMount() {
     this.props.fetchSaves();
   }
-  
+
   renderSavesList = saves => (
     saves && saves.map((save, i) => {
       return (
@@ -34,13 +36,13 @@ export default class Saves extends React.Component {
             {...save.volumeInfo}
           />
         </li>
-      )
+      );
     })
   );
-  
+
   render() {
     const { saves, children } = this.props;
-    
+
     return (
       <div className="container">
         {children ? children : (
@@ -54,8 +56,4 @@ export default class Saves extends React.Component {
       </div>
     );
   }
-  
 }
-
-
-

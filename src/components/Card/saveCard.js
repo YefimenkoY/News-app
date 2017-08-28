@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes as PT } from 'prop-types';
 import { Button } from 'antd';
 import { Link } from 'react-router';
 
@@ -6,25 +7,25 @@ import { DEFAULT_IMG } from '../../constants/lists';
 import { shortenTitle, mapList } from '../../common';
 
 const SaveCard = (
-  {  title, id, imageLinks, authors, deleteSave }
+  { title, id, imageLinks, authors, deleteSave }
 ) => {
   const imgUrl = imageLinks && imageLinks.thumbnail ?
     imageLinks.thumbnail : DEFAULT_IMG;
-  
+
   const onDelete = () => deleteSave(id);
-  
+
   return (
     <div>
       <Link to={`saves/save-${id}`}>
         <div className="news__img">
-          <img src={imgUrl} alt="book-img"/>
+          <img src={imgUrl} alt="book-img" />
         </div>
       </Link>
       <div className="news__text">
         <Link to={`saves/save-${id}`}>
           <h3>
             { shortenTitle(title) }
-            <br/>
+            <br />
             <span className="news__author">
               {authors ? mapList(authors) : 'Unknown'}
             </span>
@@ -35,6 +36,15 @@ const SaveCard = (
         </div>
       </div>
     </div>
-  )
+  );
 };
+
+SaveCard.propTypes = {
+  title: PT.string,
+  id: PT.string,
+  deleteSave: PT.func,
+  imageLinks: PT.string,
+  authors: PT.string,
+};
+
 export default SaveCard;

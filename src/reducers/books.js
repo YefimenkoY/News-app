@@ -16,13 +16,10 @@ const books = (state = initialState, action) => {
         books: [...state.books, ...action.books],
         startIndex: state.startIndex += 10
       };
-    break;
     case AT.LOADING_START:
       return { ...state, loading: true };
-      break;
     case AT.LOADING_STOP:
       return { ...state, loading: false };
-      break;
     case AT.CLEAR_BOOKS:
       return {
         ...state,
@@ -33,21 +30,21 @@ const books = (state = initialState, action) => {
       return {
         ...state,
         searchVal: action.val
-      }
+      };
     case AT.SHOW_MODAL:
       return {
         ...state,
         modalType: action.modalType,
-      }
+      };
     case AT.CLEAR_MODAL_TYPE:
       return {
         ...state,
         modalType: null,
         text: '',
-      }
+      };
     case AT.RESET_START_INDEX:
       return { ...state, startIndex: 0 };
-    
+
     default: return state;
   }
 };

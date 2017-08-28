@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes as PT } from 'prop-types';
 import { Button } from 'antd';
 import { Link } from 'react-router';
 
@@ -7,26 +8,26 @@ import { shortenTitle, mapList } from '../../common';
 import './Card.scss';
 
 const CardComp = (
-  {  title, id, sendSave, imageLinks, authors }
+  { title, id, sendSave, imageLinks, authors }
 ) => {
   const imgUrl = imageLinks && imageLinks.thumbnail ?
     imageLinks.thumbnail : DEFAULT_IMG;
   const shortTitle = shortenTitle(title);
-  
+
   const onSave = () => sendSave(id);
-  
+
   return (
     <div>
       <Link to={`books/book-${id}`}>
         <div className="news__img">
-          <img src={imgUrl} alt="book-img"/>
+          <img src={imgUrl} alt="book-img" />
         </div>
       </Link>
       <div className="news__text">
         <Link to={`books/book-${id}`}>
           <h3>
             { shortTitle }
-            <br/>
+            <br />
             <span className="news__author">
               {authors ? mapList(authors) : 'Unknown'}
             </span>
@@ -44,6 +45,15 @@ const CardComp = (
         </div>
       </div>
     </div>
-  )
+  );
 };
+
+CardComp.propTypes = {
+  title: PT.string,
+  id: PT.string,
+  sendSave: PT.func,
+  imageLinks: PT.string,
+  authors: PT.string,
+};
+
 export default CardComp;

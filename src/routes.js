@@ -9,13 +9,13 @@ import BookDetails from './containers/BookDetails';
 import SaveDetails from './containers/SaveDetails';
 
 export default () => (
-    <Route path='/' component={App} >
-      <IndexRoute component={StartPage} />
-      <Route path='/books' component={BooksList} >
-        <Route path=':id' components={BookDetails} />
-      </Route>
-      <Route path='/saves' component={Saves}>
-        <Route path=':id' components={SaveDetails} />
-      </Route>
+  <Route path='/' component={App} >
+    <IndexRoute component={StartPage} />
+    <Route path='/books' component={BooksList} >
+      <Route path=':id' components={BookDetails} />
     </Route>
+    <Route path='/saves' component={Saves}>
+      <Route path=':id' components={SaveDetails} />
+    </Route>
+  </Route>
 );

@@ -8,6 +8,6 @@ export default function configureStore(reducers, middlewares) {
     typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
       ? window.devToolsExtension() : f => f
   )(createStore);
-  
+
   return finalCreateStore(combineReducers(reducers), {});
 }

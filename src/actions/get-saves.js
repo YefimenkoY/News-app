@@ -7,11 +7,11 @@ export const fetchSaves = () => async dispatch => {
   const {
     saveFavorites, startLoadingFav, stopLoadingFav
   } = bindActionCreators(actions, dispatch);
-  
+
   startLoadingFav();
-  
-  const { data } = await axios.get( getSaves() );
-  
+
+  const { data } = await axios.get(getSaves());
+
   saveFavorites(data);
-  stopLoadingFav()
+  stopLoadingFav();
 };

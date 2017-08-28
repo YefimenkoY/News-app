@@ -1,12 +1,13 @@
 import React from 'react';
 import { Alert } from 'antd';
+import { PropTypes } from 'prop-types';
 import { createAlert } from 'react-redux-alerts';
 
 @createAlert({ alertName: 'not-found' })
 export class ErrorAlert extends React.Component {
   render() {
     const { message, close } = this.props;
-    
+
     return (
       <Alert
         message={message}
@@ -14,7 +15,7 @@ export class ErrorAlert extends React.Component {
         closable
         onClose={close}
       />
-    )
+    );
   }
 }
 
@@ -24,7 +25,7 @@ export class ErrorAlert extends React.Component {
 export class SuccessAlert extends React.Component {
   render() {
     const { message, close } = this.props;
-    
+
     return (
       <Alert
         message={message}
@@ -32,11 +33,16 @@ export class SuccessAlert extends React.Component {
         closable
         onClose={close}
       />
-    )
+    );
   }
 }
 
+ErrorAlert.propTypes = {
+  message: PropTypes.string,
+  close: PropTypes.func,
+};
 
-
-
-
+SuccessAlert.propTypes = {
+  message: PropTypes.string,
+  close: PropTypes.func,
+};

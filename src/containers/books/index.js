@@ -2,12 +2,12 @@ import React, { Children } from 'react';
 import { PropTypes as PT } from 'prop-types';
 import { connect } from 'react-redux';
 import $ from 'jquery';
-import actions from '../../actions';
-
-import CardComp from '../../components/Card';
 import { Input, BackTop } from 'antd';
+
+import actions from '../../actions';
+import CardComp from '../../components/Card';
 import { ErrorAlert, SuccessAlert } from '../../components/Modals';
-import alertStatuses from '../../constants/alertStatuses'
+import alertStatuses from '../../constants/alertStatuses';
 import { MAX_RESULTS } from '../../constants/lists';
 import './book.scss';
 
@@ -21,12 +21,11 @@ import './book.scss';
   }), actions
 )
 export default class BooksList extends React.Component {
-  
   constructor() {
     super();
     this.timer = false;
   }
-  
+
   static propTypes = {
     books: PT.array,
     startIndex: PT.number,
@@ -41,36 +40,37 @@ export default class BooksList extends React.Component {
     clearBookList: PT.func,
     sendSaves: PT.func,
     resetStartIndex: PT.func,
+    children: PT.object,
   };
-  
+
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll);
     this.searchInput.focus();
   }
-  
+
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll)
+    window.removeEventListener('scroll', this.onScroll);
   }
-  
+
   componentDidUpdate(prevProps) {
     const { modalType, clearModalType, createAlert, dismissAlert, searchVal } = this.props;
     const { NOT_FOUND } = alertStatuses;
     modalType && createAlert(modalType, NOT_FOUND);
     if (prevProps.searchVal !== searchVal && modalType === 'not-found') {
       dismissAlert(modalType);
-      clearModalType()
+      clearModalType();
     }
   }
-  
+
   onScroll = () => {
-    const {fetchBooks, children, startIndex, modalType, searchVal} = this.props;
+    const { fetchBooks, children, startIndex, modalType, searchVal } = this.props;
     if (children) return;
-    const params = { q: searchVal, startIndex, maxResults: 9};
-    if($(window).scrollTop() === $(document).height() - $(window).height()){
+    const params = { q: searchVal, startIndex, maxResults: 9 };
+    if ($(window).scrollTop() === $(document).height() - $(window).height()) {
       searchVal && modalType !== 'not-found' && fetchBooks(params);
     }
   };
-  
+
   onChange = e => {
     const {
       fetchBooks,
@@ -81,25 +81,25 @@ export default class BooksList extends React.Component {
       loading,
       resetStartIndex,
     } = this.props;
-    
+
     if (loading) return;
-    
+
     setSearchVal(e.target.value);
     clearBookList();
     resetStartIndex();
     const params = { q: searchVal, startIndex, maxResults: MAX_RESULTS };
-    
+
     if (this.timer) clearTimeout(this.timer);
-  
+
     this.timer = setTimeout(() => {
       searchVal && fetchBooks(params);
       this.timer = false;
     }, 800);
   };
-  
+
   render() {
     const { books, children, searchVal, sendSaves } = this.props;
-    
+
     return (
       <div className="container">
         {Children.count(children) ? children : (
@@ -116,7 +116,7 @@ export default class BooksList extends React.Component {
               onChange={this.onChange}
               value={searchVal}
             />
-            <BackTop/>
+            <BackTop />
             <ul className="news__list">
               {books && books.map(
                 (book, i) => (
@@ -135,9 +135,7 @@ export default class BooksList extends React.Component {
       </div>
     );
   }
-  
+
   inputRef = el => this.searchInput = el;
 }
-
-
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import { PropTypes as PT } from 'prop-types';
+import { Layout, Spin } from 'antd';
 import { connect } from 'react-redux';
 import actions from '../actions';
 
-import { Layout } from 'antd';
 import NavMenu from '../components/main-menu';
-import { Spin } from 'antd';
 import '../styles/main.scss';
 
 const { Content, Footer, Sider } = Layout;
@@ -17,28 +16,29 @@ const { Content, Footer, Sider } = Layout;
   }), actions
 )
 export default class App extends React.Component {
-  
   static propTypes = {
     loading: PT.bool,
     saves: PT.array,
+    children: PT.object,
+    fetchSaves: PT.func,
   };
-  
+
   componentDidMount() {
     this.props.fetchSaves();
   }
-  
+
   state = {
     collapsed: false,
   };
-  
+
   onCollapse = collapsed => {
     this.setState({ collapsed });
   };
-  
+
   render() {
     const { loading, children, saves } = this.props;
     const count = saves.length ? saves.length : 0;
-    
+
     return (
       <div className="wrapper">
         <Layout>
