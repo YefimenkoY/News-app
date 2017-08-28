@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-# Books-app
+# News-app
 
 <a name="local_deployment"></a>
 
