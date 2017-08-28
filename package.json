@@ -5,7 +5,7 @@
   },
   "scripts": {
     "clear": "rm -rf node_modules; rm -rf lib; rm -rf public",
-    "build": "webpack",
+    "build": "NODE_ENV=production webpack",
     "server": "node server.js",
     "start": "webpack-dev-server --content-base ./public",
     "lint": "eslint ./src && echo \"eslint: ok!\"",
@@ -48,6 +48,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-react-optimize": "^1.0.1",
     "babel-preset-stage-0": "^6.22.0",
     "compression-webpack-plugin": "^1.0.0",
     "css-loader": "^0.28.5",

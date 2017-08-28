@@ -40,6 +40,15 @@ const config = {
   ],
   module: {
     loaders:[
+      { test: /\.js$/, loader:'babel-loader', exclude:/node_modules/, options: {
+        babelrc: false,
+        presets: ['es2015','stage-0','react'],
+        plugins: [
+          'transform-decorators-legacy',
+          'transform-class-properties',
+          'transform-runtime'
+        ]
+      }},
       {
         test: /\.css$/,
         loader: [ 'style-loader', 'css-loader?modules', 'sass-loader?modules']
@@ -52,16 +61,7 @@ const config = {
         test: /\.scss$/,
         loader :['style-loader','css-loader','sass-loader']
       },
-      { test:/\.json$/, loader:"json-loader" },
-      { test: /\.js$/, loader:'babel-loader', exclude:/node_modules/, options: {
-        babelrc: false,
-        presets: ['es2015','stage-0','react'],
-        plugins: [
-          'transform-decorators-legacy',
-          'transform-class-properties',
-          'transform-runtime'
-        ]
-      }}
+      { test:/\.json$/, loader:"json-loader" }
     ]
   },
   devServer: {
@@ -77,7 +77,7 @@ const config = {
 if (NODE_ENV === PROD_ENV) {
   config.plugins.push(utils.Uglify());
   config.plugins.push(utils.GZip());
-  config.module.loaders[1].options.presets.push('react-optimize');
+  config.module.loaders[0].options.presets.push('react-optimize');
 }
 
 module.exports = config;
