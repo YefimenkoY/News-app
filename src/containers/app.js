@@ -23,6 +23,10 @@ export default class App extends React.Component {
     saves: PT.array,
   };
   
+  componentDidMount() {
+    this.props.fetchSaves();
+  }
+  
   state = {
     collapsed: false,
   };

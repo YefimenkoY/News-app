@@ -2,8 +2,8 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { getSaves } from '../api/end-points';
 import actions from './';
-import { Button, Icon, message } from 'antd';
-
+import { message } from 'antd';
+import statuses from '../constants/alertStatuses';
 
 export const deleteSave = id => async dispatch => {
   const { saveFavorites } = bindActionCreators(actions, dispatch);
@@ -12,4 +12,5 @@ export const deleteSave = id => async dispatch => {
   const { data } = await axios.delete( getSaves(), { params } );
   
   saveFavorites(data);
+  message.success(statuses.SUCCESS_DELETE);
 };

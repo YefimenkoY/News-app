@@ -5,7 +5,7 @@ import $ from 'jquery';
 import actions from '../../actions';
 
 import CardComp from '../../components/Card';
-import { Input, BackTop, message } from 'antd';
+import { Input, BackTop } from 'antd';
 import { ErrorAlert, SuccessAlert } from '../../components/Modals';
 import alertStatuses from '../../constants/alertStatuses'
 import { MAX_RESULTS } from '../../constants/lists';
@@ -18,7 +18,6 @@ import './book.scss';
     searchVal: state.books.searchVal,
     loading: state.books.loading,
     modalType: state.books.modalType,
-    saves: state.saves.saves,
   }), actions
 )
 export default class BooksList extends React.Component {
@@ -41,6 +40,7 @@ export default class BooksList extends React.Component {
     setSearchVal: PT.func,
     clearBookList: PT.func,
     sendSaves: PT.func,
+    resetStartIndex: PT.func,
   };
   
   componentDidMount() {
@@ -79,12 +79,15 @@ export default class BooksList extends React.Component {
       setSearchVal,
       searchVal,
       loading,
+      resetStartIndex,
     } = this.props;
-    const params = { q: searchVal, startIndex, maxResults: MAX_RESULTS };
     
     if (loading) return;
+    
     setSearchVal(e.target.value);
     clearBookList();
+    resetStartIndex();
+    const params = { q: searchVal, startIndex, maxResults: MAX_RESULTS };
     
     if (this.timer) clearTimeout(this.timer);
   
@@ -95,7 +98,7 @@ export default class BooksList extends React.Component {
   };
   
   render() {
-    const { books, children, saves, searchVal, sendSaves } = this.props;
+    const { books, children, searchVal, sendSaves } = this.props;
     
     return (
       <div className="container">
@@ -122,7 +125,6 @@ export default class BooksList extends React.Component {
                       id={book.id}
                       sendSave={sendSaves}
                       {...book.volumeInfo}
-                      saves={saves}
                     />
                   </li>
                 )

@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import { Button, Icon, message } from 'antd';
-import { selectBook } from '../../selectors';
+import { selectBook, checkExistingSaves } from '../../selectors';
 import actions from '../../actions';
 import { DEFAULT_IMG } from '../../constants/lists'
 import statuses from '../../constants/alertStatuses';
+import { mapList } from '../../common';
 import './book-details.scss';
 
 @connect(
@@ -15,6 +16,7 @@ import './book-details.scss';
     const id = props.params.id.slice(5);
     return {
       book: selectBook(id)(state),
+      isExistBook: checkExistingSaves(id)(state),
       id,
       saves: state.saves.saves
     }
@@ -30,24 +32,19 @@ export default class BookDetails extends Component {
   };
   
   onSaveBook = () => {
-    const { sendSaves, id, saves } = this.props;
-    const isExistBook = saves.find(save => save.id === id);
-    if (isExistBook) return message.warn(statuses.EXIST_BOOK);
+    const { sendSaves, id } = this.props;
     sendSaves(id);
-    message.success(statuses.SUCCESS_ADD);
   };
   
   render() {
-    const { book } = this.props;
+    const { book, isExistBook } = this.props;
     const {
       volumeInfo: {title, categories, authors, imageLinks, publishedDate, description }
     } = book;
     const desc = description ? description : 'Not found';
     const imgUrl = imageLinks && imageLinks.thumbnail ?
       imageLinks.thumbnail : DEFAULT_IMG;
-    const auth = authors && authors.map((author, i) => (
-      i <= 3 ? <span key={i}>{author}</span> : '')
-    )
+    const auth = authors && mapList(authors);
     
     return (
       <div className="book__detail">
@@ -65,7 +62,7 @@ export default class BookDetails extends Component {
                 <span className="published">Published: {publishedDate}</span>
               </div>
               <span className="categories">
-                {categories ? categories.map((item, i) => (i <= 3) ? <span key={i}>{item}</span> : '') : 'Unknown'}
+                {categories ? mapList(categories) : 'Unknown'}
               </span>
             </div>
             <div className="book__detail-button">
@@ -74,7 +71,12 @@ export default class BookDetails extends Component {
                   <Icon type="left" />Back
                 </Button>
               </Link>
-              <Button type="primary" icon='save' onClick={this.onSaveBook} >
+              <Button
+                type="primary"
+                icon='save'
+                onClick={this.onSaveBook}
+                disabled={isExistBook}
+              >
                 Save
               </Button>
             </div>

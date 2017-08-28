@@ -18,16 +18,10 @@ const books = (state = initialState, action) => {
       };
     break;
     case AT.LOADING_START:
-      return {
-        ...state,
-        loading: true,
-      };
+      return { ...state, loading: true };
       break;
     case AT.LOADING_STOP:
-      return {
-        ...state,
-        loading: false,
-      };
+      return { ...state, loading: false };
       break;
     case AT.CLEAR_BOOKS:
       return {
@@ -51,7 +45,8 @@ const books = (state = initialState, action) => {
         modalType: null,
         text: '',
       }
-    
+    case AT.RESET_START_INDEX:
+      return { ...state, startIndex: 0 };
     
     default: return state;
   }

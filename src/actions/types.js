@@ -11,6 +11,7 @@ export default keyMirror({
   'CLEAR_MODAL_TYPE': null,
   'SELECT_BOOK': null,
   'SAVE_SELECT_BOOK': null,
+  'RESET_START_INDEX': null,
   
   'SAVE_FAVORITES': null,
   'LOADING_START_FAVORITES': null,

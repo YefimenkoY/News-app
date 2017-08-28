@@ -47,6 +47,10 @@ export default {
     { type: AT.CLEAR_MODAL_TYPE, }
   ),
   
+  resetStartIndex: () => (
+    { type: AT.RESET_START_INDEX }
+  ),
+  
   fetchBooks,
   fetchSaves,
   sendSaves,

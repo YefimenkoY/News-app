@@ -1,25 +1,19 @@
 import React from 'react';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { Link } from 'react-router';
 
 import { DEFAULT_IMG } from '../../constants/lists';
-import { shortenTitle } from '../../common';
-import statuses from '../../constants/alertStatuses';
+import { shortenTitle, mapList } from '../../common';
 import './Card.scss';
 
 const CardComp = (
-  {  title, id, sendSave, saves, imageLinks, authors }
+  {  title, id, sendSave, imageLinks, authors }
 ) => {
   const imgUrl = imageLinks && imageLinks.thumbnail ?
     imageLinks.thumbnail : DEFAULT_IMG;
   const shortTitle = shortenTitle(title);
   
-  const onSave = () => {
-    const isExistBook = saves.find(save => save.id === id);
-    if (isExistBook) return message.warn(statuses.EXIST_BOOK);
-    sendSave(id);
-    message.success(statuses.SUCCESS_ADD);
-  }
+  const onSave = () => sendSave(id);
   
   return (
     <div>
@@ -34,8 +28,7 @@ const CardComp = (
             { shortTitle }
             <br/>
             <span className="news__author">
-              {authors ? authors.map((author, i) => (i <= 3) ?
-              <span key={i}>{author}</span> : '') : 'Unknown'}
+              {authors ? mapList(authors) : 'Unknown'}
             </span>
           </h3>
         </Link>

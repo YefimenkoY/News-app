@@ -2,22 +2,26 @@ import { bindActionCreators } from 'redux';
 import { get } from '../api';
 import { getBooks } from '../api/end-points';
 import actions from './';
+import { message } from 'antd';
 
 export const fetchBooks = params => async dispatch => {
   const {
     saveBooks, startLoading, stopLoading, showModal
   } = bindActionCreators(actions, dispatch);
+  const { startIndex, maxResults } = params;
+  const isShowInfo = startIndex < maxResults;
   
   startLoading();
   
-  const { data } = await get( getBooks(), params );
+  const { data: { items, totalItems } } = await get( getBooks(), params );
   
-  if (!data.totalItems) {
+  if (!totalItems) {
     stopLoading();
     showModal('not-found');
     return;
   }
   
-  saveBooks(data.items);
-  stopLoading()
+  saveBooks(items);
+  stopLoading();
+  isShowInfo && message.info(`Find ${totalItems} books!`)
 };

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Button, Icon, message } from 'antd';
+import { Button, Icon } from 'antd';
 import { selectSaveBook } from '../../selectors';
 
 import actions from '../../actions';
 import { DEFAULT_IMG } from '../../constants/lists';
-import statuses from '../../constants/alertStatuses';
+import { mapList } from '../../common';
 import '../BookDetails/book-details.scss';
 
 @connect(
@@ -24,10 +24,7 @@ export default class SaveDetails extends Component {
     id: PropTypes.string,
   };
   
-  onDelete = () => {
-    this.props.deleteSave(this.props.id);
-    message.success(statuses.SUCCESS_DELETE)
-  };
+  onDelete = () => this.props.deleteSave(this.props.id);
   
   render() {
     const { save } = this.props;
@@ -37,12 +34,9 @@ export default class SaveDetails extends Component {
     const desc = description ? description : 'Not found';
     const imgUrl = imageLinks && imageLinks.thumbnail ?
       imageLinks.thumbnail : DEFAULT_IMG;
-    const auth = authors && authors.map((author, i) => (
-      i <= 3 ? <span key={i}>{author}</span> : '')
-    );
-    const categ = categories && categories.map((item, i) => (
-      (i <= 3) ? <span key={i}>{item}</span> : '')
-    );
+    const auth = authors ? mapList(authors) : 'Unknown';
+    
+    const categ = categories && mapList(categories);
   
     return (
       <div className="book__detail">
