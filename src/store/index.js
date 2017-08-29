@@ -1,6 +1,6 @@
 'use strict';
 
-import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 
 export default function configureStore(reducers, middlewares) {
   const finalCreateStore = compose(

@@ -25,5 +25,5 @@ export const fetchBooks = params => async dispatch => {
 
   saveBooks(items);
   stopLoading();
-  isShowInfo && message.info(`Find ${totalItems} books!`);
+  isShowInfo && message.info(`Found ${totalItems} books!`);
 };
