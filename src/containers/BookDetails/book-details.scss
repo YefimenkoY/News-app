@@ -1,3 +1,5 @@
+@import "../../styles/mixin";
+
 .book__detail {
   box-shadow: 0 0 6px rgba(0,0,0,0.27);
   background: #fff;
@@ -6,6 +8,10 @@
 
   &-top {
     display: flex;
+    @include phones() {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   &-img {
@@ -24,10 +30,19 @@
     min-height: 200px;
     border-bottom: 1px solid #eaeaea;
 
+    @include phones {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     h3 {
       color: #212121;
       font-size: 30px;
       font-family: "Roboto", UILanguageFont, Arial, sans-serif;
+      @include phones {
+        text-align: center;
+      }
     }
   }
   &-button {
@@ -41,10 +56,17 @@
     margin-bottom: 100px;
     flex-direction: column;
 
+    @include phones {
+      margin-bottom: 10px;
+    }
+
     .author {
       font-weight: bold;
       color: #616161;
       margin-right: 20px;
+      @include phones {
+        margin-right: 0;
+      }
     }
 
     .published {
@@ -64,5 +86,12 @@
   &-bottom {
     margin-top: 40px;
     padding: 20px;
+  }
+
+  .info-top {
+    @include tablets {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

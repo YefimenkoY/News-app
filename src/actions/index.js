@@ -24,10 +24,6 @@ export default {
     { type: AT.CLEAR_BOOKS }
   ),
   
-  setSearchVal: val => (
-    { type: AT.SET_SEARCH_VAL, val }
-  ),
-  
   saveFavorites: saves => (
     { type: AT.SAVE_FAVORITES, saves }
   ),
@@ -51,6 +47,10 @@ export default {
   resetStartIndex: () => (
     { type: AT.RESET_START_INDEX }
   ),
+  
+  setCurrentWinWidth: width => ({
+    type: AT.SET_CURRENT_WIN_WIDTH, width
+  }),
   
   fetchBooks,
   fetchSaves,

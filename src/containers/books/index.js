@@ -1,6 +1,7 @@
 import React, { Children } from 'react';
 import { PropTypes as PT } from 'prop-types';
 import { connect } from 'react-redux';
+import { createHistory } from 'history';
 import $ from 'jquery';
 import { Input, BackTop } from 'antd';
 
@@ -11,11 +12,12 @@ import alertStatuses from '../../constants/alertStatuses';
 import { MAX_RESULTS } from '../../constants/lists';
 import './book.scss';
 
+const history = createHistory();
+
 @connect(
   state => ({
     books: state.books.books,
     startIndex: state.books.startIndex,
-    searchVal: state.books.searchVal,
     loading: state.books.loading,
     modalType: state.books.modalType,
   }), actions
@@ -29,14 +31,12 @@ export default class BooksList extends React.Component {
   static propTypes = {
     books: PT.array,
     startIndex: PT.number,
-    searchVal: PT.string,
     loading: PT.bool,
     modalType: PT.string,
     clearModalType: PT.func,
     createAlert: PT.func,
     dismissAlert: PT.func,
     fetchBooks: PT.func,
-    setSearchVal: PT.func,
     clearBookList: PT.func,
     sendSaves: PT.func,
     resetStartIndex: PT.func,
@@ -45,6 +45,7 @@ export default class BooksList extends React.Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll);
+    if (!location.search) this.props.clearBookList();
     this.searchInput.focus();
   }
 
@@ -53,55 +54,63 @@ export default class BooksList extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { modalType, clearModalType, createAlert, dismissAlert, searchVal } = this.props;
-    const { NOT_FOUND } = alertStatuses;
-    modalType && createAlert(modalType, NOT_FOUND);
-    if (prevProps.searchVal !== searchVal && modalType === 'not-found') {
+    const { modalType, clearModalType, createAlert, dismissAlert } = this.props;
+    const q = location.search.slice(7);
+    modalType && createAlert(modalType, alertStatuses.NOT_FOUND);
+    if (q && modalType === 'not-found') {
       dismissAlert(modalType);
       clearModalType();
     }
   }
 
   onScroll = () => {
-    const { fetchBooks, children, startIndex, modalType, searchVal } = this.props;
+    const { fetchBooks, children, startIndex, modalType } = this.props;
+    const q = location.search.slice(7);
     if (children) return;
-    const params = { q: searchVal, startIndex, maxResults: 9 };
+    const params = { q, startIndex, maxResults: 9 };
     if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-      searchVal && modalType !== 'not-found' && fetchBooks(params);
+      q && fetchBooks(params);
     }
   };
+  
+  componentWillMount() {
+    const { fetchBooks, startIndex } = this.props;
+    const q = location.search.slice(7);
+    const params = { q, startIndex, maxResults: MAX_RESULTS };
+    q && fetchBooks(params);
+  }
 
   onChange = e => {
     const {
       fetchBooks,
       clearBookList,
       startIndex,
-      setSearchVal,
-      searchVal,
       loading,
       resetStartIndex,
     } = this.props;
+    
+    history.push({ ...location, search: `?query=${e.target.value}` });
+    const q = location.search.slice(7);
 
     if (loading) return;
-
-    setSearchVal(e.target.value);
     clearBookList();
     resetStartIndex();
-    const params = { q: searchVal, startIndex, maxResults: MAX_RESULTS };
-
+    const params = { q, startIndex, maxResults: MAX_RESULTS };
+    
     if (this.timer) clearTimeout(this.timer);
 
     this.timer = setTimeout(() => {
-      searchVal && fetchBooks(params);
+      q && fetchBooks(params);
       this.timer = false;
     }, 800);
   };
 
   render() {
-    const { books, children, searchVal, sendSaves } = this.props;
-
+    const { books, children, sendSaves } = this.props;
+    const val = decodeURIComponent(global.location.search.slice(7));
+    
     return (
-      <div className="container">
+      <div>
         {Children.count(children) ? children : (
           <div className="news">
             <div className="modals">
@@ -114,7 +123,7 @@ export default class BooksList extends React.Component {
               placeholder="Search..."
               ref={this.inputRef}
               onChange={this.onChange}
-              value={searchVal}
+              value={val}
             />
             <BackTop />
             <ul className="news__list">

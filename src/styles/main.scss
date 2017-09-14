@@ -34,11 +34,15 @@
   color: #8996a6;
   text-shadow: 0 2px 3px;
   margin-bottom: 10px;
+
+  @include tablets {
+    font-size: 22px;
+  }
 }
 
 .search-input {
-  width: 600px;
-  margin-left: 250px;
+  //width: 600px;
+  margin: 0 auto;
 }
 
 .modals {

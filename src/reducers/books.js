@@ -1,10 +1,9 @@
 import AT from '../actions/types';
 
 const initialState = {
-  books: null,
+  books: [],
   startIndex: 0,
   loading: false,
-  searchVal: '',
   modalType: null,
 };
 
@@ -25,11 +24,6 @@ const books = (state = initialState, action) => {
         ...state,
         books: [],
         startIndex: 0
-      };
-    case AT.SET_SEARCH_VAL:
-      return {
-        ...state,
-        searchVal: action.val
       };
     case AT.SHOW_MODAL:
       return {

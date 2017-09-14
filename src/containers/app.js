@@ -13,6 +13,7 @@ const { Content, Footer, Sider } = Layout;
   state => ({
     loading: state.books.loading,
     saves: state.saves.saves,
+    width: state.winWidth,
   }), actions
 )
 export default class App extends React.Component {
@@ -20,16 +21,33 @@ export default class App extends React.Component {
     loading: PT.bool,
     saves: PT.array,
     children: PT.object,
+    width: PT.number,
     fetchSaves: PT.func,
+    setCurrentWinWidth: PT.func,
   };
 
   componentDidMount() {
-    this.props.fetchSaves();
+    const { width, fetchSaves, setCurrentWinWidth } = this.props;
+    window.addEventListener('resize', this.onResize);
+    setCurrentWinWidth(window.innerWidth);
+    this.setState({ collapsed: width < 650 });
+    fetchSaves();
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
   }
 
   state = {
     collapsed: false,
   };
+  
+  onResize = e => {
+    const { setCurrentWinWidth, width } = this.props;
+    const winWidth = e.target.innerWidth;
+    setCurrentWinWidth(winWidth);
+    this.setState({ collapsed: width < 650 });
+  }
 
   onCollapse = collapsed => {
     this.setState({ collapsed });
@@ -51,7 +69,7 @@ export default class App extends React.Component {
           </Sider>
           <Layout>
             <Spin spinning={loading} tip="Loading..." size='large'>
-              <Content className="content">
+              <Content>
                 <div className="content-inner">{children}</div>
               </Content>
             </Spin>

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 
 const app = express();
-const _PORT_ = process.env.PORT || 8060;
+const _PORT_ = process.env.PORT || 8050;
 let saves = require('./saves.json');
 
 app.set('port', _PORT_);

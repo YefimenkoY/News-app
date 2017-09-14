@@ -6,7 +6,6 @@ export default keyMirror({
   'LOADING_START': null,
   'LOADING_STOP': null,
   'CLEAR_BOOKS': null,
-  'SET_SEARCH_VAL': null,
   'SHOW_MODAL': null,
   'CLEAR_MODAL_TYPE': null,
   'SELECT_BOOK': null,
@@ -16,6 +15,7 @@ export default keyMirror({
   'SAVE_FAVORITES': null,
   'LOADING_START_FAVORITES': null,
   'LOADING_STOP_FAVORITES': null,
+  'SET_CURRENT_WIN_WIDTH': null,
 
 });
 
