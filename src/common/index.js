@@ -9,3 +9,12 @@ export const mapList = list => (
     <span key={i}>{item}</span>
   ))
 );
+
+export const getDefaultKey = path => {
+  switch (path) {
+    case '/': return '1';
+    case '/books': return '2';
+    case '/saves': return '3';
+    default: return '1';
+  }
+};

@@ -16,13 +16,13 @@
   }
 
   @include desktop {
-    width: 23%;
+    width: 30%;
   }
   @include laptop {
-    width: 35%;
+    width: 45%;
   }
   @include tablets {
-    width: 45%;
+    width: 40%;
   }
   @include phones {
     width: 80%;
