@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { getSaves } from '../api/end-points';
+import { api } from '../api';
 import actions from './';
 
 export const fetchSaves = () => async dispatch => {
@@ -10,7 +11,7 @@ export const fetchSaves = () => async dispatch => {
 
   startLoadingFav();
 
-  const { data } = await axios.get(getSaves());
+  const { data } = await api.get(getSaves());
 
   saveFavorites(data);
   stopLoadingFav();

@@ -1,8 +1,8 @@
 import { bindActionCreators } from 'redux';
-import axios from 'axios';
 import message from 'antd/lib/message';
 
 import { getSaves } from '../api/end-points';
+import { api } from '../api';
 import actions from './';
 import { selectBook, checkExistingSaves } from '../selectors';
 import statuses from '../constants/alertStatuses';
@@ -16,7 +16,7 @@ export const sendSaves = id => async (dispatch, getState) => {
 
   if (isExistBook) return warn(statuses.EXIST_BOOK);
 
-  const { data } = await axios.post( getSaves(), book );
+  const { data } = await api.post( getSaves(), book );
 
   saveFavorites(data);
   success(statuses.SUCCESS_ADD);
