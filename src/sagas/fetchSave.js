@@ -3,10 +3,10 @@ import { getSaves } from '../api/end-points';
 import { api } from '../api';
 import AT from '../actions/types';
 
-export function * fetchSavesSaga() {
+export function * fetchSavesSaga(action) {
   
   const { data } = yield call([api.get, api], getSaves());
-  console.log('SAGA', data);
+  console.log('SAGA', data, action);
   yield put({
     type: AT.SAVE_FAVORITES,
     saves: data,

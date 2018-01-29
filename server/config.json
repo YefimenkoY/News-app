@@ -1,5 +1,9 @@
 {
   "mongoose": {
-    "url": "mongodb://localhost/saves"
-  }
+    "uri": "mongodb://localhost/saves",
+    "options": {
+      "useMongoClient": true
+    }
+  },
+  "port": 6549
 }

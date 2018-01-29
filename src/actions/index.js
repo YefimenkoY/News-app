@@ -1,7 +1,6 @@
 import { actions as alertActions } from 'react-redux-alerts';
 
 import { fetchBooks } from './get-books';
-import { fetchSaves } from './get-saves';
 import { sendSaves } from './send-saave';
 import { deleteSave } from './delete-save';
 import AT from './types';
@@ -53,7 +52,7 @@ export default {
   ),
   
   fetchSavesSaga: () => (
-    { type: AT.FETCH_SAVES_SAGA }
+    { type: AT.FETCH_SAVES_SAGA, test: 'test' }
   ),
   
   fetchBooks,
