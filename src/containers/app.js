@@ -24,7 +24,7 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-    this.props.fetchSaves();
+    this.props.fetchSavesSaga();
   }
 
   state = {

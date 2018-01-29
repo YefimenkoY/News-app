@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 const api = require('./routes/saves');
 const config = require('./config.json');
 
+const port = 4633;
 const app = express();
-const _PORT_ = process.env.PORT || 6351;
+const _PORT_ = process.env.PORT || port;
 const _STATIC_FOLDER_ = path.resolve(__dirname, '../build');
 
 
@@ -15,7 +16,6 @@ mongoose.connect(config.mongoose.url, { useMongoClient: true }, (err) => {
   mongoose.Promise = global.Promise;
   console.log('mongoose was connected...');
 });
-
 
 app.set('port', _PORT_);
 app.use(express.static(_STATIC_FOLDER_));

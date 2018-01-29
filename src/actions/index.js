@@ -52,8 +52,11 @@ export default {
     { type: AT.RESET_START_INDEX }
   ),
   
+  fetchSavesSaga: () => (
+    { type: AT.FETCH_SAVES_SAGA }
+  ),
+  
   fetchBooks,
-  fetchSaves,
   sendSaves,
   ...alertActions,
   deleteSave,

@@ -16,6 +16,7 @@ export default keyMirror({
   'SAVE_FAVORITES': null,
   'LOADING_START_FAVORITES': null,
   'LOADING_STOP_FAVORITES': null,
+  'FETCH_SAVES_SAGA': null,
 
 });
 
