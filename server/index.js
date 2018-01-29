@@ -3,14 +3,14 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const api = require('./routes/saves');
-const { mongoose: { url } } = require('./config.json');
+const config = require('./config.json');
 
 const app = express();
-const _PORT_ = process.env.PORT || 8060;
+const _PORT_ = process.env.PORT || 6351;
 const _STATIC_FOLDER_ = path.resolve(__dirname, '../build');
 
 
-mongoose.connect(url, { useMongoClient: true }, (err) => {
+mongoose.connect(config.mongoose.url, { useMongoClient: true }, (err) => {
   if (err) console.log(err)
   mongoose.Promise = global.Promise;
   console.log('mongoose was connected...');
