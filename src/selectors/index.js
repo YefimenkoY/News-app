@@ -5,18 +5,18 @@ const getSaveBooks = state => state.saves.saves;
 
 const selectBook = id => (
   createSelector(getBooks, books => (
-    books.filter(book => book.id === id))[0]
+    books.find(book => book.id === id))
   )
 );
 
 const selectSaveBook = id => (
   createSelector(getSaveBooks, books => (
-    books.filter(book => book.id === id))[0]
+    books.find(book => book.id === id))
   )
 );
 
 const checkExistingSaves = id => createSelector(
-  getSaveBooks, saves => saves.find(save => save.id === id)
+  getSaveBooks, saves => saves.some(save => save.id === id)
 );
 
 export {

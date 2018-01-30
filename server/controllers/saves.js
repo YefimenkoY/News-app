@@ -1,36 +1,32 @@
-const fs = require('fs');
-const path = require('path');
-let saves = require('../../saves.json');
 const Save = require('../models/saves');
 
-const getSaves = (req, res) => {
-  console.log('saves')
-  Save.find({}, (err, data) => {
-    console.log('sdf', err, data)
-    res.send(saves);
-  });
-  // fs.readFile(path.resolve(__dirname, '../../saves.json'), 'utf8', (err, data) => {
-  //   console.log(req.path)
-  //   if (err) console.log(err);
-  //   res.send(data);
-  // })
+const getSaves = async (req, res) => {
+  try {
+    const data = await Save.find({});
+    res.send(data);
+  } catch (e) {
+    res.end(400, e.message)
+  }
 };
 
 const saveBook = async (req, res) => {
-  const saves = await Save.create({title: 'test'});
-  console.log(saves)
+  try {
+    await Save.create(req.body);
+    res.json(await Save.find({}));
+  } catch (e) {
+    res.end(400, e.message)
+  }
 };
 
-const deleteBook = (req, res) => {
+const deleteBook = async (req, res) => {
   const id = req.param('id');
-
-  saves = saves.filter(save => save.id !== id);
-
-  fs.writeFile(path.resolve(__dirname, '../../saves.json'), JSON.stringify(saves), (err) => {
-    if (err) return console.log(err);
-    res.send(saves);
-    console.log('The file was deleted!');
-  });
+  try {
+    await Save.remove({ id });
+    const saves = await Save.find({});
+    res.json(saves);
+  } catch (e) {
+    res.end(400, e.message)
+  }
 }
 
 module.exports = {
