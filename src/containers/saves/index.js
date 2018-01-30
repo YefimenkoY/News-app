@@ -23,7 +23,7 @@ export default class Saves extends React.Component {
   };
 
   componentWillMount() {
-    this.props.fetchSavesSaga();
+    this.props.fetchSaves();
   }
 
   renderSavesList = saves => (

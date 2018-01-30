@@ -23,8 +23,9 @@ const saveBook = async (req, res) => {
 const deleteBook = async (req, res) => {
   const id = req.param('id');
   try {
-    await Save.findByIdAndRemove(id)
-    res.json(await Save.find({}));
+    await Save.remove({ id });
+    const saves = await Save.find({});
+    res.json(saves);
   } catch (e) {
     res.end(400, e.message)
   }

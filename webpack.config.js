@@ -4,6 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const utils = require('./webpack/utils');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const config = require('./server/config.json')
 
 const LOCAL_ENV = 'local';
 const DEV_ENV = 'development';
@@ -17,7 +18,7 @@ const APP_FOLDER = process.cwd();
 const BUILD_FILE = './index.js';
 const TEMPLATE_FILE = './index.html';
 
-const config = {
+const webpackConfig = {
   entry: path.join(APP_FOLDER, BUILD_FOLDER, BUILD_FILE),
   output: {
     path: path.join(APP_FOLDER, PUBLIC_FOLDER),
@@ -60,8 +61,8 @@ const config = {
   devServer: {
     contentBase: './build', host: '0.0.0.0',
     proxy: {
-      '/api/saves': {
-        target: 'http://localhost:8060'
+      '/api/v1/saves': {
+        target: `http://localhost:${config.port}`
       }
     }
   }
@@ -72,4 +73,4 @@ if (NODE_ENV === PROD_ENV) {
   config.plugins.push(utils.GZip());
 }
 
-module.exports = config;
+module.exports = webpackConfig;

@@ -1,6 +1,5 @@
 import { actions as alertActions } from 'react-redux-alerts';
 
-import { fetchBooks } from './get-books';
 import { sendSaves } from './send-saave';
 import { deleteSave } from './delete-save';
 import AT from './types';
@@ -51,11 +50,14 @@ export default {
     { type: AT.RESET_START_INDEX }
   ),
   
-  fetchSavesSaga: () => (
-    { type: AT.FETCH_SAVES_SAGA, test: 'test' }
+  fetchSaves: () => (
+    { type: AT.FETCH_SAVES_SAGA }
   ),
   
-  fetchBooks,
+  fetchBooks: params => (
+    { type: AT.FETCH_BOOKS, params }
+  ),
+  
   sendSaves,
   ...alertActions,
   deleteSave,

@@ -7,11 +7,8 @@
     "clear": "rm -rf node_modules; rm -rf lib; rm -rf public",
     "build": "NODE_ENV=production webpack",
     "server": "nodemon server/",
-    "dev:server": "NODE_ENV=development webpack; npm run server",
-    "start": "webpack-dev-server --content-base ./public",
-    "lint": "eslint ./src && echo \"eslint: ok!\"",
-    "managers": "npm i --prefix ../ dep-mngr-webpack dep-mngr-eslint",
-    "preinstall": "npm update --prefix $DEP_MNGR_PREFIX dep-mngr-webpack dep-mngr-eslint"
+    "dev": "webpack-dev-server --content-base ./public | npm run server",
+    "lint": "eslint ./src && echo \"eslint: ok!\""
   },
   "keywords": [],
   "author": "yefimenkoyuriy@gmail.com",

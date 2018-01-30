@@ -1,22 +1,30 @@
-import {put, all, call, takeEvery } from 'redux-saga/effects';
+import {put, call, takeEvery } from 'redux-saga/effects';
 import { getSaves } from '../api/end-points';
 import { api } from '../api';
-import AT from '../actions/types';
+import actions from '../actions';
 
-export function * fetchSavesSaga(action) {
+const {
+  saveFavorites,
+  stopLoadingFav,
+  fetchSaves,
+  startLoadingFav,
+} = actions;
+
+export function* fetchSavesSaga() {
+  try {
+    yield put(startLoadingFav());
+    
+    const { data } = yield call([api.get, api], getSaves());
+    
+    yield put(saveFavorites(data))
+    yield put(stopLoadingFav())
+  } catch (e) {
+    yield put(stopLoadingFav())
+  }
   
-  const { data } = yield call([api.get, api], getSaves());
-  console.log('SAGA', data, action);
-  yield put({
-    type: AT.SAVE_FAVORITES,
-    saves: data,
-  })
-  
-  yield put({
-    type: AT.LOADING_STOP_FAVORITES,
-  })
+ 
 }
 
 export function* watchFetchSaves() {
-  yield takeEvery(AT.FETCH_SAVES_SAGA, fetchSavesSaga)
+  yield takeEvery(fetchSaves().type, fetchSavesSaga)
 }
