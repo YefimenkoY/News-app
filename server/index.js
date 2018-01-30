@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const db = require('./db');
 const api = require('./routes/saves');
+const { mongoose: { url } } = require('./config.json');
 
 const app = express();
 const _PORT_ = process.env.PORT || 8060;
