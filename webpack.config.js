@@ -69,8 +69,8 @@ const webpackConfig = {
 };
 
 if (NODE_ENV === PROD_ENV) {
-  config.plugins.push(utils.Uglify());
-  config.plugins.push(utils.GZip());
+  webpackConfig.plugins.push(utils.Uglify());
+  webpackConfig.plugins.push(utils.GZip());
 }
 
 module.exports = webpackConfig;
