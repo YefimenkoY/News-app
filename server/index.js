@@ -32,4 +32,3 @@ db.on('open', () => {
     console.log(`Listening on port ${_PORT_}`);
   });
 });
-

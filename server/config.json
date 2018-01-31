@@ -1,9 +1,8 @@
 {
   "mongoose": {
-    "uri": "mongodb://localhost/saves",
+    "uri": "mongodb://yyr:test123@ds217898.mlab.com:17898/saves",
     "options": {
       "useMongoClient": true
     }
-  },
-  "port": 6527
+  }
 }

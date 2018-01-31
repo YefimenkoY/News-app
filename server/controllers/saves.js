@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 const Save = require('../models/saves');
 
 const getSaves = async (req, res) => {
@@ -13,7 +11,7 @@ const getSaves = async (req, res) => {
 
 const saveBook = async (req, res) => {
   try {
-    const saves = await Save.create(req.body);
+    await Save.create(req.body);
     res.json(await Save.find({}));
   } catch (e) {
     res.end(400, e.message)
