@@ -7,7 +7,6 @@
     "clear": "rm -rf node_modules; rm -rf lib; rm -rf public",
     "build": "NODE_ENV=production ./node_modules/.bin/webpack",
     "server": "nodemon server/",
-    "heroku-postbuild": "npm run build",
     "devserver": "webpack-dev-server --content-base ./public",
     "dev": "npm run devserver | npm run server",
     "lint": "eslint ./src && echo \"eslint: ok!\""
