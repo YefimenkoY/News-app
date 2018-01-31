@@ -4,5 +4,6 @@
     "options": {
       "useMongoClient": true
     }
-  }
+  },
+  "port": 8066
 }
