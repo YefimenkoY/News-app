@@ -1,34 +1,36 @@
-const fs = require('fs');
-const path = require('path');
 const Save = require('../models/saves');
 
 const getSaves = async (req, res) => {
+  let data;
   try {
-    const data = await Save.find({});
-    res.send(data);
+    data = await Save.find({});
   } catch (e) {
-    res.end(400, e.message)
+    return res.status(500).end(e.message)
   }
+  res.send(data);
 };
 
 const saveBook = async (req, res) => {
   try {
-    const saves = await Save.create(req.body);
-    res.json(await Save.find({}));
+    await Save.create(req.body);
   } catch (e) {
-    res.end(400, e.message)
+    return res.status(400).end(e.message)
   }
+  res.json(await Save.find({}));
 };
 
 const deleteBook = async (req, res) => {
   const id = req.param('id');
+  let saves;
+  if (!id) return res.status(400).end('id is required');
+  
   try {
     await Save.remove({ id });
-    const saves = await Save.find({});
-    res.json(saves);
+    saves = await Save.find({});
   } catch (e) {
-    res.end(400, e.message)
+    return res.end(400, e.message)
   }
+  res.json(saves);
 }
 
 module.exports = {

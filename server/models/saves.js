@@ -22,4 +22,3 @@ const saveShema = new Schema({
 });
 
 module.exports = mongoose.model('Save', saveShema);
-
