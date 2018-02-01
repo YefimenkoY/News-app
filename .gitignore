@@ -10,4 +10,3 @@ dump.rdb
 Makefile
 .module-cache
 npm-debug.log.*
-build
