@@ -22,7 +22,8 @@ const saveBook = async (req, res) => {
 const deleteBook = async (req, res) => {
   const id = req.param('id');
   let saves;
-  if (!id) return res.status(400).end('id is required');
+  if (!id)
+    return res.status(400).end('id is required');
   
   try {
     await Save.remove({ id });

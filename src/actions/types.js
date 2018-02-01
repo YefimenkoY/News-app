@@ -18,6 +18,7 @@ export default keyMirror({
   'LOADING_STOP_FAVORITES': null,
   'FETCH_SAVES_SAGA': null,
   'FETCH_BOOKS': null,
+  'DELETE_SAVE': null,
 
 });
 

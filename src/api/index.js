@@ -9,8 +9,13 @@ const get = (url, options = {}) => (
   instance.get(url, { params: { apiKey, ...options }})
 );
 
+const remove = (url, options = {}) => (
+  api.delete(url, { params: { ...options }})
+);
+
 export {
   get,
+  remove,
   api,
 };
 
