@@ -21,7 +21,7 @@ db.on('open', () => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   app.use('/api/v1', api);
-  
+
   app.get('/', (req, res) => {
     res.sendFile(path.join(_STATIC_FOLDER_, '/index.html'));
   });
@@ -33,6 +33,5 @@ db.on('open', () => {
   app.listen(_PORT_, () => {
     console.log(`Listening on port ${_PORT_}`);
   });
-  
-  app.use(errorHendler)
+  app.use(errorHendler);
 });

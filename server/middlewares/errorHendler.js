@@ -1,5 +1,5 @@
 
-module.exports = function(req, res, err, next){
-  console.log('errHendl',arguments)
+module.exports = ({ status, message }, req, res, next) => {
+  res.status(status || 500).end(message || 'server error');
   next();
-}
+};
