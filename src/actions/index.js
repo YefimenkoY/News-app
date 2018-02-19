@@ -53,8 +53,8 @@ export default {
     { type: AT.FETCH_SAVES_SAGA }
   ),
   
-  fetchBooks: params => (
-    { type: AT.FETCH_BOOKS, params }
+  fetchBooks: (val) => (
+    { type: AT.FETCH_BOOKS, val }
   ),
   
   deleteSave: id => (

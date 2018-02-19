@@ -1,16 +1,20 @@
-import {put, call, takeEvery } from 'redux-saga/effects';
+import {put, call, takeEvery, select } from 'redux-saga/effects';
 import { message } from 'antd';
 import { getBooks } from '../api/end-points';
 import { get } from '../api';
 import actions from '../actions';
+import { MAX_RESULTS } from '../constants/lists';
 
 const {
-  saveBooks, startLoading, stopLoading, showModal, fetchBooks
+  saveBooks, startLoading, stopLoading, fetchBooks
 } = actions;
 
-export function* fetchBooksSaga({ params }) {
-  const { startIndex, maxResults } = params;
-  const isShowInfo = startIndex < maxResults;
+export function* fetchBooksSaga({ val: q }) {
+  const { startIndex } = yield select((state) => state.books);
+  const params = { q, startIndex, maxResults: MAX_RESULTS };
+  const isShowInfo = startIndex < MAX_RESULTS;
+  
+  if (!q) return yield call(message.warn('Not found!'))
   
   yield put(startLoading());
   
@@ -19,11 +23,11 @@ export function* fetchBooksSaga({ params }) {
     yield put(saveBooks(items));
     yield put(stopLoading());
     if (isShowInfo) {
-      yield call([message.info, message.info], `Found ${totalItems} books!`);
+      yield call(message.info, `Found ${totalItems} books!`);
     }
   } catch (e) {
     yield put(stopLoading())
-    yield call([message.error, message.error], e.message)
+    yield call(message.error, e.message)
   }
 }
 

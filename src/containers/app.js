@@ -38,9 +38,7 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { loading, savesLen, children, saves } = this.props;
-    const count = saves.length ? saves.length : 0;
-
+    const { loading, savesLen, children } = this.props;
     return (
       <div className="wrapper">
         <Layout>
@@ -49,7 +47,7 @@ export default class App extends React.Component {
             collapsed={this.state.collapsed}
             onCollapse={this.onCollapse}
           >
-            <NavMenu len={savesLen} count={count} />
+            <NavMenu len={savesLen} />
           </Sider>
           <Layout>
             <Spin spinning={loading} tip="Loading..." size="large">

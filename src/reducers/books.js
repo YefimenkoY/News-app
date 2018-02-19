@@ -1,11 +1,10 @@
 import AT from '../actions/types';
+import { MAX_RESULTS } from '../constants/lists';
 
 const initialState = {
   books: null,
   startIndex: 0,
   loading: false,
-  searchVal: '',
-  modalType: null,
 };
 
 const books = (state = initialState, action) => {
@@ -14,7 +13,7 @@ const books = (state = initialState, action) => {
       return {
         ...state,
         books: [...state.books, ...action.books],
-        startIndex: state.startIndex += 10
+        startIndex: state.startIndex + MAX_RESULTS + 1
       };
     case AT.LOADING_START:
       return { ...state, loading: true };
