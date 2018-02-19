@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const saveShema = new Schema({
+const saveSchema = new Schema({
   id: {
     type: String,
     unique: true
@@ -21,4 +21,4 @@ const saveShema = new Schema({
   },
 });
 
-module.exports = mongoose.model('Save', saveShema);
+module.exports = mongoose.model('Save', saveSchema);

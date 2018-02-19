@@ -13,7 +13,9 @@ const { Content, Footer, Sider } = Layout;
   state => ({
     loading: state.books.loading,
     saves: state.saves.saves,
-  }), actions
+    savesLen: state.saves.saves.length,
+  }),
+  actions,
 )
 export default class App extends React.Component {
   static propTypes = {
@@ -36,7 +38,7 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { loading, children, saves } = this.props;
+    const { loading, savesLen, children, saves } = this.props;
     const count = saves.length ? saves.length : 0;
 
     return (
@@ -47,16 +49,17 @@ export default class App extends React.Component {
             collapsed={this.state.collapsed}
             onCollapse={this.onCollapse}
           >
-            <NavMenu count={count} />
+            <NavMenu len={savesLen} count={count} />
           </Sider>
           <Layout>
-            <Spin spinning={loading} tip="Loading..." size='large'>
+            <Spin spinning={loading} tip="Loading..." size="large">
               <Content className="content">
                 <div className="content-inner">{children}</div>
               </Content>
             </Spin>
             <Footer className="footer">
-              ©2017 Created by <a href="https://github.com/YefimenkoY">YefimenkoY</a>
+              ©2018 Created by{' '}
+              <a href="https://github.com/YefimenkoY">YefimenkoY</a>
             </Footer>
           </Layout>
         </Layout>

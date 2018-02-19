@@ -8,7 +8,7 @@
     "build": "NODE_ENV=production ./node_modules/.bin/webpack",
     "server": "nodemon server/",
     "devserver": "webpack-dev-server --content-base ./public",
-    "dev": "npm run devserver | npm run server",
+    "dev": "NODE_ENV=development ./node_modules/.bin/webpack && npm run devserver",
     "lint": "eslint ./src && echo \"eslint: ok!\""
   },
   "keywords": [],
@@ -36,7 +36,9 @@
     "redux-logger": "^3.0.1",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "styled-components": "^3.1.6",
+    "webpack": "^3.11.0"
   },
   "devDependencies": {
     "axios": "^0.16.2",

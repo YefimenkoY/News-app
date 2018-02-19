@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const shortenTitle = title => (
-  title.length > 15 ? `${title.slice(0, 25)}...` : title
+  !!title && title.length > 15 ? `${title.slice(0, 25)}...` : title
 );
 
 export const mapList = list => (

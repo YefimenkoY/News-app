@@ -6,8 +6,8 @@ const getSaves = async (req, res, next) => {
     data = await Save.find({});
   } catch (e) {
     return next({
-      status: 400,
-      message: 'server error',
+      status: 404,
+      message: 'Not found',
     })
   }
   res.send(data);
@@ -18,8 +18,8 @@ const saveBook = async (req, res, next) => {
     await Save.create(req.body);
   } catch (e) {
     return next({
-      status: 400,
-      message: 'server error',
+      status: 500,
+      message: 'Server error',
     })
   }
   res.json(await Save.find({}));
@@ -40,7 +40,7 @@ const deleteBook = async (req, res, next) => {
   } catch (e) {
     return next({
       status: 500,
-      message: 'server error',
+      message: 'Server error',
     });
   }
   res.json(saves);
