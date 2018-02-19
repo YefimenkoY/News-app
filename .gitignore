@@ -7,6 +7,7 @@ server/node_modules/*
 dump.rdb
 *.zip
 *.log
+build/*
 Makefile
 .module-cache
 npm-debug.log.*
