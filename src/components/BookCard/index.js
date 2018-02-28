@@ -1,28 +1,30 @@
 import React from 'react';
 import { PropTypes as PT } from 'prop-types';
 import { Button } from 'antd';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { DEFAULT_IMG } from '../../constants/lists';
 import { shortenTitle, mapList } from '../../common';
+import './Card.scss';
 
-const SaveCard = (
-  { title, id, imageLinks, authors, deleteSave }
+const BookCard = (
+  { title, id, imageLinks, sendSave, authors, deleteSave, path }
 ) => {
   const imgUrl = imageLinks && imageLinks.thumbnail ?
     imageLinks.thumbnail : DEFAULT_IMG;
 
-  const onDelete = () => deleteSave(id);
+  const handleClick = () => (deleteSave || sendSave)(id);
+  const buttonText = path === '/saves' ? 'Delete' : 'Save';
 
   return (
     <div>
-      <Link to={`saves/save-${id}`}>
+      <Link to={`${path}/${id}`}>
         <div className="news__img">
           <img src={imgUrl} alt="book-img" />
         </div>
       </Link>
       <div className="news__text">
-        <Link to={`saves/save-${id}`}>
+        <Link to={`${path}/${id}`}>
           <h3>
             { shortenTitle(title) }
             <br />
@@ -32,19 +34,25 @@ const SaveCard = (
           </h3>
         </Link>
         <div className="book__adding">
-          <Button onClick={onDelete} ghost type='primary' icon="delete">delete</Button>
+          <Button onClick={handleClick} ghost type='primary' icon="delete">{buttonText}</Button>
         </div>
       </div>
     </div>
   );
 };
 
-SaveCard.propTypes = {
+BookCard.propTypes = {
   title: PT.string,
   id: PT.string,
   deleteSave: PT.func,
-  imageLinks: PT.string,
-  authors: PT.string,
+  imageLinks: PT.oneOfType([
+    PT.string,
+    PT.object
+  ]),
+  authors: PT.oneOfType([
+    PT.string,
+    PT.array
+  ]),
 };
 
-export default SaveCard;
+export default BookCard;

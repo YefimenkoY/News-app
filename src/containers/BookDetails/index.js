@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { Button, Icon } from 'antd';
 import { selectBook, checkExistingSaves } from '../../selectors';
@@ -11,21 +11,15 @@ import { mapList } from '../../common';
 import './book-details.scss';
 
 @connect(
-  (state, props) => {
-    const id = props.params.id.slice(5);
-    return {
-      book: selectBook(id)(state),
-      isExistBook: checkExistingSaves(id)(state),
-      id,
-      saves: state.saves.saves
-    };
-  }, actions
+  (state, { id }) => ({
+    book: selectBook(id)(state),
+    isExistBook: checkExistingSaves(id)(state),
+  }), actions,
 )
 
 export default class BookDetails extends Component {
 
   static propTypes = {
-    books: PropTypes.array,
     id: PropTypes.string,
     sendSaves: PropTypes.func,
     book: PropTypes.object,
@@ -38,7 +32,7 @@ export default class BookDetails extends Component {
   };
 
   render() {
-    const { book, isExistBook } = this.props;
+    const { book, isExistBook, match: { path } } = this.props;
     const {
       volumeInfo: { title, categories, authors, imageLinks, publishedDate, description }
     } = book;
@@ -67,7 +61,7 @@ export default class BookDetails extends Component {
               </span>
             </div>
             <div className="book__detail-button">
-              <Link to="/books">
+              <Link to={path}>
                 <Button type="primary">
                   <Icon type="left" />Back
                 </Button>

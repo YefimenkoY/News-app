@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect';
 
-const getBooks = state => state.books.books;
+const getBooks = state => state.books.books || [];
 const getSaveBooks = state => state.saves.saves;
 
 const selectBook = id => (
-  createSelector(getBooks, books => (
-    books.find(book => book.id === id))
+  createSelector(getBooks, getSaveBooks, (books, saves) => (
+    [...books, ...saves].find(book => book.id === id))
   )
 );
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
+import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter } from 'react-router-redux'
 
 import configureStore from '../src/store';
 import reducers from './reducers';
@@ -14,12 +15,15 @@ import '../src/styles/main.scss';
 const store = configureStore(reducers, middlewares);
 const routes = createRoutes();
 const root = document.getElementById('app');
+export const history = createHistory();
 
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router routes={routes} history={browserHistory} />
+    <ConnectedRouter history={history}>
+      {routes}
+    </ConnectedRouter>
   </Provider>,
   root
 );
