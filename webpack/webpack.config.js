@@ -1,44 +1,58 @@
-'use strict';
-
 const path = require('path');
 const webpack = require('webpack');
-const utils = require('./webpack/utils');
+const utils = require('./utils');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const config = require('./server/config.json')
+const apiServerConfig = require('../server/config.json');
 
 const LOCAL_ENV = 'local';
 const DEV_ENV = 'development';
 const PROD_ENV = 'production';
-
-const BUILD_FOLDER = './src';
-const PUBLIC_FOLDER = './build';
-
+const DEV_PORT = 8093;
+const BUILD_FOLDER = '../src/index.js';
 const NODE_ENV = process.env.NODE_ENV || DEV_ENV;
-const APP_FOLDER = process.cwd();
-const BUILD_FILE = './index.js';
-const TEMPLATE_FILE = './index.html';
+const APP_FOLDER = __dirname;
 
 const webpackConfig = {
-  entry: path.join(APP_FOLDER, BUILD_FOLDER, BUILD_FILE),
+  entry: [
+    'babel-polyfill',
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+    path.resolve(APP_FOLDER, BUILD_FOLDER),
+  ],
   output: {
-    path: path.join(APP_FOLDER, PUBLIC_FOLDER),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, '../build'),
+    filename: 'bundle.js',
+    publicPath: "/",
   },
   watch: NODE_ENV === LOCAL_ENV,
   devtool: NODE_ENV === DEV_ENV ? 'source-map' : false,
   plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV),
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
       DEV_ENV: JSON.stringify(DEV_ENV)
     }),
     new HtmlWebpackPlugin({
-      template: path.join(APP_FOLDER, BUILD_FOLDER, TEMPLATE_FILE),
+      template: path.join(APP_FOLDER, '../src/index.html'),
+      inject: false,
     }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
   ],
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf)$/,
+        use: [
+          'file-loader',
+          {
+            loader: 'url-loader',
+            options: { limit: 40000 },
+          },
+        ],
+      },
       {
         test: /\.css$/,
         loader: ['style-loader', 'css-loader?modules', 'sass-loader?modules']
@@ -59,13 +73,15 @@ const webpackConfig = {
     ]
   },
   devServer: {
-    contentBase: './build', host: '0.0.0.0',
+    port: DEV_PORT,
+    contentBase: path.resolve(__dirname, '../src/'),
+    historyApiFallback: true,
     proxy: {
-      '/api/v1/saves': {
-        target: `http://localhost:${config.port}`
+      [`http://localhost:${DEV_PORT}/api/v1/saves`]: {
+        target: `http://localhost:${apiServerConfig.port}`,
       }
     }
-  }
+  },
 };
 
 if (NODE_ENV === PROD_ENV) {

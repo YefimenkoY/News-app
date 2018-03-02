@@ -7,7 +7,7 @@ const initialState = {
   loading: false,
 };
 
-const books = (state = initialState, action) => {
+export default function(state = initialState, action) {
   switch (action.type) {
     case AT.SAVE_BOOKS:
       return {
@@ -48,4 +48,3 @@ const books = (state = initialState, action) => {
   }
 };
 
-export default books;

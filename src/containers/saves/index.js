@@ -34,14 +34,13 @@ export default class Saves extends React.Component {
       <ul className="news__list">
         {saves && saves.map((save, i) => {
           return (
-            <li className="news__item" key={i}>
-              <BookCard
-                deleteSave={this.props.deleteSave}
-                id={save.id}
-                path={this.props.match.path}
-                {...save.volumeInfo}
-              />
-            </li>
+            <BookCard
+              key={i}
+              deleteSave={this.props.deleteSave}
+              id={save.id}
+              path={this.props.match.path}
+              {...save.volumeInfo}
+            />
           );
         })}
       </ul>

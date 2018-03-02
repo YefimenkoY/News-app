@@ -17,7 +17,7 @@ const BookCard = (
   const buttonText = path === '/saves' ? 'Delete' : 'Save';
 
   return (
-    <div>
+    <li className="news__item">
       <Link to={`${path}/${id}`}>
         <div className="news__img">
           <img src={imgUrl} alt="book-img" />
@@ -37,7 +37,7 @@ const BookCard = (
           <Button onClick={handleClick} ghost type='primary' icon="delete">{buttonText}</Button>
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 

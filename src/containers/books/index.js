@@ -79,16 +79,14 @@ export default class BooksList extends React.Component {
         />
         <BackTop />
         <ul className="news__list">
-          {books &&
-          books.map((book, i) => (
-            <li className="news__item" key={i}>
-              <BookCard
-                id={book.id}
-                sendSave={sendSaves}
-                path={this.props.match.path}
-                {...book.volumeInfo}
-              />
-            </li>
+          {books && books.map((book, i) => (
+            <BookCard
+              key={i}
+              id={book.id}
+              sendSave={sendSaves}
+              path={this.props.match.path}
+              {...book.volumeInfo}
+            />
           ))}
         </ul>
       </div>
