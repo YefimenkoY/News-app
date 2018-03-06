@@ -5,7 +5,7 @@ const initialState = {
   loading: false,
 };
 
-const saves = (state = initialState, action) => {
+export default function(state = initialState, action) {
   switch (action.type) {
     case AT.SAVE_FAVORITES:
       return {
@@ -26,4 +26,3 @@ const saves = (state = initialState, action) => {
   }
 };
 
-export default saves;

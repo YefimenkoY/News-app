@@ -2,9 +2,11 @@ import React from 'react';
 import { PropTypes as PT } from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../actions';
+import { Switch, Route } from 'react-router-dom';
 
 import '../../styles/main.scss';
-import SaveCard from '../../components/Card/saveCard';
+import BookCard from '../../components/BookCard';
+import BookDetails from '../../containers/BookDetails'
 
 @connect(
   state => ({
@@ -27,32 +29,35 @@ export default class Saves extends React.Component {
   }
 
   renderSavesList = saves => (
-    saves && saves.map((save, i) => {
-      return (
-        <li className="news__item" key={i}>
-          <SaveCard
-            deleteSave={this.props.deleteSave}
-            id={save.id}
-            {...save.volumeInfo}
-          />
-        </li>
-      );
-    })
+    <div>
+      <h1 className="title">Favorites Books:</h1>
+      <ul className="news__list">
+        {saves && saves.map((save, i) => {
+          return (
+            <BookCard
+              key={i}
+              deleteSave={this.props.deleteSave}
+              id={save.id}
+              path={this.props.match.path}
+              {...save.volumeInfo}
+            />
+          );
+        })}
+      </ul>
+    </div>
   );
+  
+  renderSavesDetails = ({ match: { params: { id }}}) => <BookDetails {...this.props} id={id} />
 
   render() {
-    const { saves, children } = this.props;
+    const { saves } = this.props;
 
     return (
       <div className="container">
-        {children ? children : (
-          <div>
-            <h1 className="title">Favorites Books:</h1>
-            <ul className="news__list">
-              {this.renderSavesList(saves)}
-            </ul>
-          </div>
-        )}
+        <Switch>
+          <Route path='/saves/:id' render={this.renderSavesDetails} />
+          <Route exact render={() => this.renderSavesList(saves)} />
+        </Switch>
       </div>
     );
   }

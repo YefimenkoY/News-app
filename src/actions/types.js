@@ -19,6 +19,7 @@ export default keyMirror({
   'FETCH_SAVES_SAGA': null,
   'FETCH_BOOKS': null,
   'DELETE_SAVE': null,
+  'SEND_SAVE': null,
 
 });
 

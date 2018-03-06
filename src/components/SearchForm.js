@@ -6,6 +6,7 @@ import { SEARCH_FORM } from '../constants/lists';
 
 @reduxForm({
   form: SEARCH_FORM,
+  destroyOnUnmount: false
 })
 
 class SearchForm extends Component {

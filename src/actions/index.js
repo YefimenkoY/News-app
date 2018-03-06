@@ -1,6 +1,5 @@
 import { actions as alertActions } from 'react-redux-alerts';
 
-import { sendSaves } from './send-saave';
 import AT from './types';
 
 export default {
@@ -61,6 +60,8 @@ export default {
     { type: AT.DELETE_SAVE, id }
   ),
   
-  sendSaves,
+  sendSaves: id => (
+    { type: AT.SEND_SAVE, id }
+  ),
   ...alertActions,
 };
