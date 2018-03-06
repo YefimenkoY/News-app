@@ -1,22 +1,20 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+
+
 
 export default function(reducers, middlewares, initailState = {}) {
-  const enhancers = [];
-  if (DEV_ENV && typeof window === 'object' && typeof window.devToolsExtension !== 'undefined') {
-    
-    const debugEnhancer = window.devToolsExtension();
-    enhancers.push(debugEnhancer)
-  }
-  const middlewareEnhancer = applyMiddleware(...middlewares);
-  enhancers.push(middlewareEnhancer)
   
-  const store = createStore(reducers, initailState, compose(...enhancers))
+  const store = createStore(reducers, initailState, composeWithDevTools(
+    applyMiddleware(...middlewares),
+  ))
   
-  if (module.hot && DEV_ENV) {
+  if (module.hot) {
     module.hot.accept('../reducers', () => {
-      import('../reducers')
-        .then(({ default: reducers }) => store.replaceReducer(reducers))
+      const next = require('../reducers').default;
+      store.replaceReducer(next())
     })
+    
   }
 
   return store;

@@ -7,7 +7,7 @@ const apiServerConfig = require('../server/config.json');
 const LOCAL_ENV = 'local';
 const DEV_ENV = 'development';
 const PROD_ENV = 'production';
-const DEV_PORT = 8093;
+const DEV_PORT = 8136;
 const BUILD_FOLDER = '../src/index.js';
 const NODE_ENV = process.env.NODE_ENV || DEV_ENV;
 const APP_FOLDER = __dirname;
@@ -34,7 +34,7 @@ const webpackConfig = {
       DEV_ENV: JSON.stringify(DEV_ENV)
     }),
     new HtmlWebpackPlugin({
-      template: path.join(APP_FOLDER, '../src/index.html'),
+      template: path.resolve(__dirname, '../src/index.html'),
       inject: false,
     }),
     new webpack.HotModuleReplacementPlugin(),
@@ -74,7 +74,7 @@ const webpackConfig = {
   },
   devServer: {
     port: DEV_PORT,
-    contentBase: path.resolve(__dirname, '../src/'),
+    contentBase: path.resolve(__dirname, '../build/'),
     historyApiFallback: true,
     proxy: {
       [`http://localhost:${DEV_PORT}/api/v1/saves`]: {
